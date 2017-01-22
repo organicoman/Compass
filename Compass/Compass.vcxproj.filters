@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Child Wnd">
+      <UniqueIdentifier>{45e8ef0b-01cf-473b-ba8c-b79bfb0e5515}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Internal Dependencies">
+      <UniqueIdentifier>{b7c80c24-19f1-4fba-8d70-b5455b0771e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Additional Res">
+      <UniqueIdentifier>{20eba41b-4fea-42c4-9f1f-d0fa69468a09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\bitmaps">
+      <UniqueIdentifier>{5bdbc8d2-015f-4f02-a662-0f933510b940}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Child Wnd\Property_Pages">
+      <UniqueIdentifier>{f8856dc0-7fd8-42d6-bccd-277bc11ff9ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Child Wnd\Screens">
+      <UniqueIdentifier>{587b809d-5fe6-4c6d-af9a-ddb7ad7485bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Child Wnd\Doc_View">
+      <UniqueIdentifier>{d3e7c85d-b2c6-49b3-b62c-022250e035c5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Compass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AtlasDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AtlasMainFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CamDoc.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraWnd.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="CamView.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="CarouselDoc.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="CarouselView.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="CarouselWnd.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="SpectrumDoc.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="SpectrumWnd.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="SperctrumView.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Symbols.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="Prpty_res.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertyWnd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QuantificationPage.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="ElementPage.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="AcquiDisplPage.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AtlasDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AtlasMainFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Compass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QuantificationPage.cpp">
+      <Filter>Source Files\Child Wnd\Property_Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraWnd.cpp">
+      <Filter>Source Files\Child Wnd\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CarouselWnd.cpp">
+      <Filter>Source Files\Child Wnd\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="PropertyWnd.cpp">
+      <Filter>Source Files\Child Wnd\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="SpectrumWnd.cpp">
+      <Filter>Source Files\Child Wnd\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="CamDoc.cpp">
+      <Filter>Source Files\Child Wnd\Doc_View</Filter>
+    </ClCompile>
+    <ClCompile Include="CamView.cpp">
+      <Filter>Source Files\Child Wnd\Doc_View</Filter>
+    </ClCompile>
+    <ClCompile Include="CarouselDoc.cpp">
+      <Filter>Source Files\Child Wnd\Doc_View</Filter>
+    </ClCompile>
+    <ClCompile Include="CarouselView.cpp">
+      <Filter>Source Files\Child Wnd\Doc_View</Filter>
+    </ClCompile>
+    <ClCompile Include="SpectrumDoc.cpp">
+      <Filter>Source Files\Child Wnd\Doc_View</Filter>
+    </ClCompile>
+    <ClCompile Include="SperctrumView.cpp">
+      <Filter>Source Files\Child Wnd\Doc_View</Filter>
+    </ClCompile>
+    <ClCompile Include="ElementPage.cpp">
+      <Filter>Source Files\Child Wnd\Property_Pages</Filter>
+    </ClCompile>
+    <ClCompile Include="AcquiDisplPage.cpp">
+      <Filter>Source Files\Child Wnd\Property_Pages</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Compass.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="Properties.rc">
+      <Filter>Resource Files\Additional Res</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Compass.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Compass.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\app-logo.png">
+      <Filter>Resource Files\bitmaps</Filter>
+    </Image>
+    <Image Include="res\idw_came.bmp">
+      <Filter>Resource Files\bitmaps</Filter>
+    </Image>
+    <Image Include="res\idw_caro.bmp">
+      <Filter>Resource Files\bitmaps</Filter>
+    </Image>
+    <Image Include="res\idw_spec.bmp">
+      <Filter>Resource Files\bitmaps</Filter>
+    </Image>
+    <Image Include="res\Toolbar256.bmp">
+      <Filter>Resource Files\bitmaps</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
