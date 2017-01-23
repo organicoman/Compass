@@ -119,9 +119,6 @@ void CCarouselWnd::OnViewButtonClicked()
 	}
 	else
 	{
-		
-		m_Camera->DestroyWindow();
-		m_Camera = nullptr;
 		fCamOnOff = FALSE;
 	}
 	

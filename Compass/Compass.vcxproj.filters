@@ -173,9 +173,6 @@
     <Image Include="res\Compass.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\app-logo.png">
-      <Filter>Resource Files\bitmaps</Filter>
-    </Image>
     <Image Include="res\idw_came.bmp">
       <Filter>Resource Files\bitmaps</Filter>
     </Image>
@@ -187,6 +184,9 @@
     </Image>
     <Image Include="res\Toolbar256.bmp">
       <Filter>Resource Files\bitmaps</Filter>
+    </Image>
+    <Image Include="res\app-logo-64.bmp">
+      <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
 </Project>

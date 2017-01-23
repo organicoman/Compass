@@ -190,7 +190,7 @@ BOOL CAtlasMainFrame::SetupCameraWnd()
 		return FALSE;
 	}
 
-	if (!m_wndCamera->Create(NULL, _T("Camera"), WS_CHILD | WS_VISIBLE | FWS_ADDTOTITLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, clientRect, this,
+	if (!m_wndCamera->Create(NULL, _T("Camera"), WS_CHILD | WS_VISIBLE | FWS_ADDTOTITLE | WS_CLIPCHILDREN, clientRect, this,
 		IDW_CAMERA, NULL/*to add the view context*/))
 	{
 		TRACE0("Error: Failed to create the Child Window -Camera\n");
