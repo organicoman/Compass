@@ -101,7 +101,7 @@ void CCarouselWnd::OnViewButtonClicked()
 		rect.right = rect.right - 50;
 		rect.bottom = rect.Height() / 2 - 5;
 		
-		m_Camera = new CCameraWnd(CCameraWnd::VIEW_MODE);
+		m_Camera = new CCameraWnd;
 		ASSERT(m_Camera);
 		
 		if (!m_Camera->Create(NULL, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, rect, this, 1234)) 

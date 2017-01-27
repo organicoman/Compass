@@ -177,7 +177,7 @@ BOOL CAtlasMainFrame::SetupCameraWnd()
 	CRect clientRect;
 	GetClientRect(&clientRect);
 	
-	m_wndCamera = new CCameraWnd;
+	m_wndCamera = new CCameraWnd(CCameraWnd::WINDOW_MODE);
 	ASSERT(m_wndCamera);
 	if (!m_wndCamera)
 	{

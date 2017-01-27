@@ -11,7 +11,6 @@
 #define IDC_BUTTON_VIEW      0x8104
 
 #define IDW_CAMERA			 0x8200
-#define IDW_CAMERA_VIEW		 0x8210
 #define IDC_BUTTON_ANNOTATE	 0x8201
 
 #define IDW_SPECTRUM		 0x8300

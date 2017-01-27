@@ -10,6 +10,10 @@
 
 IMPLEMENT_DYNCREATE(CCameraWnd, CFrameWndEx)
 
+CCameraWnd::CCameraWnd()
+{
+}
+
 CCameraWnd::CCameraWnd(MODE enmMode)
 	:m_ViewMode(enmMode)
 {
@@ -59,7 +63,7 @@ int CCameraWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	// TODO:  Add your specialized creation code here
-	m_toolbar.EnableLargeIcons(TRUE);
+	if(m_ViewMode==CCameraWnd::WINDOW_MODE) m_toolbar.EnableLargeIcons(TRUE);
 
 	if (!m_toolbar.Create(this, WS_CHILD | WS_VISIBLE | CBRS_RIGHT | CBRS_SIZE_FIXED | CBRS_TOOLTIPS) ||
 		!m_toolbar.LoadToolBar(m_ViewMode==MODE::WINDOW_MODE? IDW_CAMERA: IDW_CAMERA_VIEW))
@@ -68,14 +72,14 @@ int CCameraWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return-1;
 	}
 	m_toolbar.EnableTextLabels();
-	CString labels[] = { _T("CAP"), _T("GRA"),_T("NOTE") };
+	CString labels[] = { _T("CAP"), _T("GRA"), _T("NOTE") };
 	for (int i = 0; i<m_toolbar.GetCount(); i++)
 	{
 		CMFCToolBarButton* btn = m_toolbar.GetButton(i);
 
 		btn->m_bText = TRUE;
 		btn->m_bImage = FALSE;
-		m_toolbar.SetButtonText(i, labels[i]);
+		m_toolbar.SetButtonText(i, m_ViewMode==MODE::WINDOW_MODE? labels[i]:CString(labels[i][0]));
 	}
 
 

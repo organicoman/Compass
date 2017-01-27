@@ -240,6 +240,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\app-logo-64.bmp" />
+    <Image Include="res\bmp00001.bmp" />
     <Image Include="res\Compass.ico" />
     <Image Include="res\idw_came.bmp" />
     <Image Include="res\idw_caro.bmp" />
