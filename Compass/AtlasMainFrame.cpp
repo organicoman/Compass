@@ -5,9 +5,6 @@
 #include "Compass.h"
 #include "AtlasMainFrame.h"
 
-
-#define new DEBUG_NEW
-
 // CAtlasMainFrame
 
 CAtlasMainFrame::CAtlasMainFrame():
@@ -187,7 +184,7 @@ BOOL CAtlasMainFrame::SetupCameraWnd()
 		TRACE0("Failed to allocate memory for CameraWnd\n");
 		return FALSE;
 	}
-
+	
 	if (!m_wndCamera->Create(NULL, _T("Camera"), WS_CHILD | WS_VISIBLE | FWS_ADDTOTITLE | WS_CLIPCHILDREN, clientRect, this,
 		IDW_CAMERA, NULL/*to add the view context*/))
 	{

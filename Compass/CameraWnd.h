@@ -14,7 +14,7 @@ public:
 	//Embeded controles
 protected:
 	CMFCToolBar m_toolbar;
-	MODE		m_ViewMode = MODE::WINDOW_MODE;
+	MODE		m_ViewMode;
 
 protected:
 	DECLARE_MESSAGE_MAP()

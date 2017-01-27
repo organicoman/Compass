@@ -156,9 +156,10 @@ void CAtlasDlg::SetupTable()
 // Helper function to Create the Main FrameWnd
 BOOL CAtlasDlg::CreateAtlasFrame()
 {
-	BOOL bResult = m_pCWndAtlas->Create(NULL, NULL, 0UL, CRect(5, 106, 764, 590), this);
-
-	return bResult;
+	CRect rect(3, 66, 508, 362);
+	MapDialogRect(&rect);
+	
+	return m_pCWndAtlas->Create(NULL, NULL, 0UL, rect, this);
 }
 
 void CAtlasDlg::OnIdwCamera()

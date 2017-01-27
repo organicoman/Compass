@@ -104,7 +104,7 @@ void CCarouselWnd::OnViewButtonClicked()
 		CCameraWnd* m_Camera = new CCameraWnd;
 		ASSERT(m_Camera);
 		
-		m_Camera->SetMode(CCameraWnd::MODE::VIEW_MODE);
+		m_Camera->SetMode(CCameraWnd::VIEW_MODE);
 
 		if (!m_Camera->Create(NULL, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, rect, this, 1234))
 		{

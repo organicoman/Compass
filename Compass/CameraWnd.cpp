@@ -10,7 +10,7 @@
 
 IMPLEMENT_DYNCREATE(CCameraWnd, CFrameWndEx)
 
-CCameraWnd::CCameraWnd()
+CCameraWnd::CCameraWnd():m_ViewMode(MODE::WINDOW_MODE)
 {
 
 }
