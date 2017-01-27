@@ -25,6 +25,7 @@ private:
 	CQuantificationPage pageQuant;
 	CElementPage pageElemt;
 	CAcquiDisplPage pageAcqui_Displ;
+	virtual void PostNcDestroy();
 };
 
 

@@ -236,6 +236,7 @@
     <ResourceCompile Include="Properties.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Report20170124-1952.diagsession" />
     <None Include="res\Compass.rc2" />
   </ItemGroup>
   <ItemGroup>

@@ -90,9 +90,6 @@
     <ClInclude Include="Prpty_res.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PropertyWnd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="QuantificationPage.h">
       <Filter>Header Files\Internal Dependencies</Filter>
     </ClInclude>
@@ -100,6 +97,9 @@
       <Filter>Header Files\Internal Dependencies</Filter>
     </ClInclude>
     <ClInclude Include="AcquiDisplPage.h">
+      <Filter>Header Files\Internal Dependencies</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertyWnd.h">
       <Filter>Header Files\Internal Dependencies</Filter>
     </ClInclude>
   </ItemGroup>
@@ -168,6 +168,7 @@
     <None Include="res\Compass.rc2">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="..\Report20170124-1952.diagsession" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Compass.ico">

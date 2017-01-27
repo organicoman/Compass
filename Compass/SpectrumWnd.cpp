@@ -85,12 +85,3 @@ BOOL CSpectrumWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD d
 
 	return CFrameWndEx::Create(lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd);
 }
-
-
-void CSpectrumWnd::PostNcDestroy()
-{
-	// TODO: Add your specialized code here and/or call the base class
-
-	CWnd::PostNcDestroy();
-	delete this;
-}

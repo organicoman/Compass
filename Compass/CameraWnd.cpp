@@ -61,7 +61,7 @@ int CCameraWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_toolbar.EnableLargeIcons(TRUE);
 
 	if (!m_toolbar.Create(this, WS_CHILD | WS_VISIBLE | CBRS_RIGHT | CBRS_SIZE_FIXED | CBRS_TOOLTIPS) ||
-		!m_toolbar.LoadToolBar(IDW_CAMERA))
+		!m_toolbar.LoadToolBar(m_ViewMode==MODE::WINDOW_MODE? IDW_CAMERA: IDW_CAMERA_VIEW))
 	{
 		TRACE0("Failed to create and load Camera ToolBar\n");
 		return-1;
@@ -84,11 +84,13 @@ int CCameraWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-
-void CCameraWnd::PostNcDestroy()
+void CCameraWnd::SetMode(MODE enmMode)
 {
-	// TODO: Add your specialized code here and/or call the base class
+	m_ViewMode = enmMode;
+}
 
-	CWnd::PostNcDestroy();
-	if(this) delete this;
+// Gets the Camera View mode (i.e is it a Window or a View in a Window)
+CCameraWnd::MODE CCameraWnd::GetMode()
+{
+	return m_ViewMode;
 }

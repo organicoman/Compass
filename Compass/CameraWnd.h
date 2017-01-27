@@ -9,10 +9,12 @@ class CCameraWnd : public CFrameWndEx
 public:
 	CCameraWnd();           
 	virtual ~CCameraWnd();
+	enum MODE {WINDOW_MODE, VIEW_MODE};
 
 	//Embeded controles
 protected:
 	CMFCToolBar m_toolbar;
+	MODE		m_ViewMode = MODE::WINDOW_MODE;
 
 protected:
 	DECLARE_MESSAGE_MAP()
@@ -20,7 +22,10 @@ protected:
 public:
 	virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext = NULL);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
-	virtual void PostNcDestroy();
+	
+	// Gets Sets the Camera View mode (i.e is it a Window or a View in a Window)
+	CCameraWnd::MODE GetMode();
+	void SetMode(MODE enmMode);
 };
 
 

@@ -5,8 +5,8 @@
 #include "Compass.h"
 #include "AtlasMainFrame.h"
 
-#include "CarouselWnd.h"
 
+#define new DEBUG_NEW
 
 // CAtlasMainFrame
 
@@ -62,15 +62,13 @@ BOOL CAtlasMainFrame::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWOR
 			return FALSE;
 		}
 	}
-	// make sure the DynamicLayout items list is empty (normaly we should implement a function
-	//CMFCDynamicLayout::ResetLayout() so we can empty the layout from all children 
-	//-Unfortunatly the framework doesn't implment it)
+	
+	// make sure the DynamicLayout items list is empty 
 	ASSERT(layout->IsEmpty() == TRUE);
 
 	//at first creation the CarouselWnd is the first screen
 	return SetupCarouselWnd();
 }
-
 
 // Switch between the different screens (Camera, Carousel, Spectrum...)
 BOOL CAtlasMainFrame::SwitchWnd(CURRENTWND enIDwnd)
@@ -98,38 +96,38 @@ BOOL CAtlasMainFrame::SwitchWnd(CURRENTWND enIDwnd)
 		m_enmCurrentWnd = enIDwnd;
 		break;
 	case WND_SPECTRUM:
-		if (m_wndSpectrum == nullptr) //if pointer is null then create the wnd
+		if (m_wndSpectrum == nullptr) 
 		{
 			if (SetupSpectrumWnd() == FALSE)
 			{
 				TRACE0("Error creating the Spectrum Window\n");
 				return FALSE;
 			}
-			KillCurrentWnd(m_enmCurrentWnd);//Breakpoint here if you think that this function causes flickering
+			KillCurrentWnd(m_enmCurrentWnd);
 		}
 		m_enmCurrentWnd = enIDwnd;
 		break;
 	case WND_CAROUSEL:
-		if (m_wndCarousel == nullptr) //if pointer is null then create the wnd
+		if (m_wndCarousel == nullptr) 
 		{
 			if (SetupCarouselWnd() == FALSE)
 			{
 				TRACE0("Error creating the Carousel Window\n");
 				return FALSE;
 			}
-			KillCurrentWnd(m_enmCurrentWnd);//Breakpoint here if you think that this function causes flickering
+			KillCurrentWnd(m_enmCurrentWnd);
 		}
 		m_enmCurrentWnd = enIDwnd;
 		break;
 	case WND_PROPERTY:
-		if (m_wndProperty == nullptr) //if pointer is null then create the wnd
+		if (m_wndProperty == nullptr)
 		{
 			if (SetupPropertyWnd() == FALSE)
 			{
 				TRACE0("Error creating the Property Window\n");
 				return FALSE;
 			}
-			KillCurrentWnd(m_enmCurrentWnd);//Breakpoint here if you think that this function causes flickering
+			KillCurrentWnd(m_enmCurrentWnd);
 		}
 		m_enmCurrentWnd = enIDwnd;
 		break;
@@ -251,7 +249,7 @@ BOOL CAtlasMainFrame::SetupPropertyWnd()
 	CRect clientRect;
 	GetClientRect(&clientRect);
 	
-	m_wndProperty = new CPropertyWnd(_T("Properties"), this); //the constructor call the Create() methode to display itself
+	m_wndProperty = new CPropertyWnd(_T("Properties"));
 	ASSERT(m_wndProperty);
 	if (!m_wndProperty)
 	{
@@ -292,11 +290,12 @@ BOOL CAtlasMainFrame::SetupPropertyWnd()
 		
 		SetScrollInfo(SB_VERT, &sbInfo);
 	}
+	m_wndProperty->SetActiveWindow();
 		
 	return TRUE;
 }
 
-// Deactivate then destroy the actual child window, then free the pointer resource.
+// Deactivate then destroy the actual child window, to free the pointer resource.
 void CAtlasMainFrame::KillCurrentWnd(CURRENTWND enmIDwnd)
 {
 	// depending on the parameter; ensure that we are not destoying an already destroyed hWnd.
@@ -333,7 +332,6 @@ void CAtlasMainFrame::KillCurrentWnd(CURRENTWND enmIDwnd)
 		{
 			ShowScrollBar(SB_VERT, FALSE); //Hides vertical scrollbarctrl after destruction
 			m_wndProperty->DestroyWindow();
-			delete m_wndProperty;
 			m_wndProperty = nullptr;
 		}
 		break;

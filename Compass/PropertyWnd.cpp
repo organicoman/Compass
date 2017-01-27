@@ -12,6 +12,9 @@ IMPLEMENT_DYNAMIC(CPropertyWnd, CPropertySheet)
 
 CPropertyWnd::CPropertyWnd()
 {
+	AddPage(&pageQuant);
+	AddPage(&pageElemt);
+	AddPage(&pageAcqui_Displ);
 }
 
 CPropertyWnd::CPropertyWnd(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
@@ -59,4 +62,12 @@ void CPropertyWnd::AdjustPagesLayout()
 	layout->AddItem(TabCtrl->GetSafeHwnd(), move, size);
 	
 	layout->AddItem(pageQuant.GetSafeHwnd(), move, size);
+}
+
+void CPropertyWnd::PostNcDestroy()
+{
+	// TODO: Add your specialized code here and/or call the base class
+
+	CPropertySheet::PostNcDestroy();
+	if(this) delete this;
 }

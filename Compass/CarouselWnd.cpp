@@ -88,15 +88,6 @@ BOOL CCarouselWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD d
 	return CFrameWndEx::Create(lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd);
 }
 
-
-void CCarouselWnd::PostNcDestroy()
-{
-	// TODO: Add your specialized code here and/or call the base class
-
-	CWnd::PostNcDestroy();
-	delete this;
-}
-
 void CCarouselWnd::OnViewButtonClicked()
 {
 	if (fCamOnOff == FALSE)
@@ -109,8 +100,12 @@ void CCarouselWnd::OnViewButtonClicked()
 		rect.top = y;
 		rect.right = rect.right - 50;
 		rect.bottom = rect.Height() / 2 - 5;
-		CWnd* m_Camera = new CCameraWnd;
+		
+		CCameraWnd* m_Camera = new CCameraWnd;
 		ASSERT(m_Camera);
+		
+		m_Camera->SetMode(CCameraWnd::MODE::VIEW_MODE);
+
 		if (!m_Camera->Create(NULL, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, rect, this, 1234))
 		{
 			TRACE0("Failure: error while creating the camera view window\n");

@@ -24,13 +24,13 @@ public:
 
 	// Private attributes
 private:
-	CCarouselWnd* m_wndCarousel = nullptr;
-	CCameraWnd*   m_wndCamera = nullptr;
-	CSpectrumWnd* m_wndSpectrum = nullptr;
+	CWnd*         m_wndCarousel = nullptr;
+	CWnd*         m_wndCamera = nullptr;
+	CWnd*         m_wndSpectrum = nullptr;
 	CPropertyWnd* m_wndProperty = nullptr;
 	CURRENTWND    m_enmCurrentWnd;
 public:
-	virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle = WS_OVERLAPPEDWINDOW, const RECT& rect = rectDefault, CWnd* pParentWnd = NULL, LPCTSTR lpszMenuName = NULL, DWORD dwExStyle = 0, CCreateContext* pContext = NULL);
+	virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect = rectDefault, CWnd* pParentWnd = NULL, LPCTSTR lpszMenuName = NULL, DWORD dwExStyle = 0, CCreateContext* pContext = NULL);
 	
 	// Switch between the different screens (Camera, Carousel, Spectrum...)
 	BOOL SwitchWnd(CURRENTWND enIDwnd);
