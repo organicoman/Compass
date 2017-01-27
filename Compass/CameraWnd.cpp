@@ -10,9 +10,9 @@
 
 IMPLEMENT_DYNCREATE(CCameraWnd, CFrameWndEx)
 
-CCameraWnd::CCameraWnd():m_ViewMode(MODE::WINDOW_MODE)
+CCameraWnd::CCameraWnd(MODE enmMode)
+	:m_ViewMode(enmMode)
 {
-
 }
 
 CCameraWnd::~CCameraWnd()
@@ -28,7 +28,8 @@ END_MESSAGE_MAP()
 // CCameraWnd message handlers
 
 
-BOOL CCameraWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext)
+BOOL CCameraWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd,
+	                    UINT nID, CCreateContext* pContext)
 {
 	// load stock cursor, brush, and icon for
 	// my own window class
@@ -82,15 +83,4 @@ int CCameraWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	DockPane(&m_toolbar);
 
 	return 0;
-}
-
-void CCameraWnd::SetMode(MODE enmMode)
-{
-	m_ViewMode = enmMode;
-}
-
-// Gets the Camera View mode (i.e is it a Window or a View in a Window)
-CCameraWnd::MODE CCameraWnd::GetMode()
-{
-	return m_ViewMode;
 }

@@ -101,12 +101,10 @@ void CCarouselWnd::OnViewButtonClicked()
 		rect.right = rect.right - 50;
 		rect.bottom = rect.Height() / 2 - 5;
 		
-		m_Camera = new CCameraWnd;
+		m_Camera = new CCameraWnd(CCameraWnd::VIEW_MODE);
 		ASSERT(m_Camera);
 		
-		//m_Camera->SetMode(CCameraWnd::VIEW_MODE);
-
-		if (!m_Camera->Create(NULL, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, rect, this, 1234))
+		if (!m_Camera->Create(NULL, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, rect, this, 1234)) 
 		{
 			TRACE0("Failure: error while creating the camera view window\n");
 		}
