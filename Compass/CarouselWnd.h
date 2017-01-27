@@ -14,7 +14,7 @@ public:
 	//Embeded controles
 protected:
 	CMFCToolBar m_toolbar;
-	CCameraWnd* m_Camera = nullptr;
+	CWnd* m_Camera = nullptr;
 	BOOL fCamOnOff = FALSE;
 
 protected:

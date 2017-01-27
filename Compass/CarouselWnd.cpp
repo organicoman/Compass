@@ -101,10 +101,10 @@ void CCarouselWnd::OnViewButtonClicked()
 		rect.right = rect.right - 50;
 		rect.bottom = rect.Height() / 2 - 5;
 		
-		CCameraWnd* m_Camera = new CCameraWnd;
+		m_Camera = new CCameraWnd;
 		ASSERT(m_Camera);
 		
-		m_Camera->SetMode(CCameraWnd::VIEW_MODE);
+		//m_Camera->SetMode(CCameraWnd::VIEW_MODE);
 
 		if (!m_Camera->Create(NULL, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, rect, this, 1234))
 		{
@@ -114,6 +114,8 @@ void CCarouselWnd::OnViewButtonClicked()
 	}
 	else
 	{
+		m_Camera->DestroyWindow();
+		m_Camera = nullptr;
 		fCamOnOff = FALSE;
 	}
 	
@@ -151,21 +153,16 @@ void CCarouselWnd::OnSize(UINT nType, int cx, int cy)
 	CFrameWndEx::OnSize(nType, cx, cy);
 	if (m_Camera != nullptr)
 	{
-		m_Camera->DestroyWindow();
-		// TODO: Add your message handler code here
+		// todo: add your message handler code here
 		CRect rect;
-		
-		int x = cx / 2;
+		GetClientRect(&rect);
+		int x = rect.Width() / 2;
 		int y = 5;
 		rect.left = x - 50;
 		rect.top = y;
-		rect.right = cx - 50;
+		rect.right = rect.right - 50;
 		rect.bottom = rect.Height() / 2 - 5;
-		CWnd* m_Camera = new CCameraWnd;
-		ASSERT(m_Camera);
-		if (!m_Camera->Create(NULL, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, rect, this,NULL))
-		{
-			TRACE0("Failure: error while creating the camera view window\n");
-		}
+
+		m_Camera->MoveWindow(&rect);
 	}
 }

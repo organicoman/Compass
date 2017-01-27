@@ -168,7 +168,6 @@
     <None Include="res\Compass.rc2">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="..\Report20170124-1952.diagsession" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Compass.ico">
