@@ -148,10 +148,10 @@ void CCarouselWnd::OnPaint()
 
 void CCarouselWnd::OnSize(UINT nType, int cx, int cy)
 {
+	m_toolbar.SetSizes(CSize(38, 38), CSize(32, 32));
 	CFrameWndEx::OnSize(nType, cx, cy);
 	if (m_Camera != nullptr)
 	{
-		// todo: add your message handler code here
 		CRect rect;
 		GetClientRect(&rect);
 		int x = rect.Width() / 2;
