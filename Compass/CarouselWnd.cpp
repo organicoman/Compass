@@ -5,8 +5,6 @@
 #include "Compass.h"
 #include "CarouselWnd.h"
 
-
-
 // CCarouselWnd
 
 IMPLEMENT_DYNCREATE(CCarouselWnd, CFrameWndEx)
@@ -22,7 +20,6 @@ CCarouselWnd::~CCarouselWnd()
 
 BEGIN_MESSAGE_MAP(CCarouselWnd, CFrameWndEx)
 	ON_WM_CREATE()
-	ON_WM_NCDESTROY()
 	ON_COMMAND(IDC_BUTTON_VIEW, &CCarouselWnd::OnViewButtonClicked)
 	ON_WM_PAINT()
 	ON_WM_SIZE()
@@ -148,7 +145,6 @@ void CCarouselWnd::OnPaint()
 
 void CCarouselWnd::OnSize(UINT nType, int cx, int cy)
 {
-	m_toolbar.SetSizes(CSize(38, 38), CSize(32, 32));
 	CFrameWndEx::OnSize(nType, cx, cy);
 	if (m_Camera != nullptr)
 	{

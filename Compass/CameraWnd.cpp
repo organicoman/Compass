@@ -14,23 +14,13 @@ CCameraWnd::CCameraWnd()
 {
 }
 
-CCameraWnd::CCameraWnd(MODE enmMode)
-	:m_ViewMode(enmMode)
-{
-}
-
 CCameraWnd::~CCameraWnd()
 {
 }
 
-
 BEGIN_MESSAGE_MAP(CCameraWnd, CFrameWndEx)
 	ON_WM_CREATE()
 END_MESSAGE_MAP()
-
-
-// CCameraWnd message handlers
-
 
 BOOL CCameraWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd,
 	                    UINT nID, CCreateContext* pContext)
@@ -56,17 +46,17 @@ BOOL CCameraWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwS
 	return CFrameWndEx::Create(lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd);
 }
 
-
+// CCameraWnd message handlers
 int CCameraWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CFrameWndEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
 	// TODO:  Add your specialized creation code here
-	if(m_ViewMode==CCameraWnd::WINDOW_MODE) m_toolbar.EnableLargeIcons(TRUE);
+	m_toolbar.EnableLargeIcons(TRUE);
 
 	if (!m_toolbar.Create(this, WS_CHILD | WS_VISIBLE | CBRS_RIGHT | CBRS_SIZE_FIXED | CBRS_TOOLTIPS) ||
-		!m_toolbar.LoadToolBar(m_ViewMode==MODE::WINDOW_MODE? IDW_CAMERA: IDW_CAMERA_VIEW))
+		!m_toolbar.LoadToolBar(IDW_CAMERA))
 	{
 		TRACE0("Failed to create and load Camera ToolBar\n");
 		return-1;
@@ -79,7 +69,7 @@ int CCameraWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 		btn->m_bText = TRUE;
 		btn->m_bImage = FALSE;
-		m_toolbar.SetButtonText(i, m_ViewMode==MODE::WINDOW_MODE? labels[i]:CString(labels[i][0]));
+		m_toolbar.SetButtonText(i, labels[i]);
 	}
 
 

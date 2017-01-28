@@ -177,7 +177,7 @@ BOOL CAtlasMainFrame::SetupCameraWnd()
 	CRect clientRect;
 	GetClientRect(&clientRect);
 	
-	m_wndCamera = new CCameraWnd(CCameraWnd::WINDOW_MODE);
+	m_wndCamera = new CCameraWnd;
 	ASSERT(m_wndCamera);
 	if (!m_wndCamera)
 	{
@@ -191,7 +191,6 @@ BOOL CAtlasMainFrame::SetupCameraWnd()
 		TRACE0("Error: Failed to create the Child Window -Camera\n");
 		return FALSE;
 	}
-
 	
 	CMFCDynamicLayout *layout = GetDynamicLayout();
 
@@ -268,11 +267,11 @@ BOOL CAtlasMainFrame::SetupPropertyWnd()
 
 	CMFCDynamicLayout::MoveSettings move;
 	CMFCDynamicLayout::SizeSettings size;
-	size.m_nXRatio = 100;//only scale the propertysheet window horizontaly with the parent window
+	size.m_nXRatio = 100;//scale the propertysheet window horizontaly with the parent window
 		
 	layout->AddItem(m_wndProperty->GetSafeHwnd(), move, size);
 
-	m_wndProperty->AdjustPagesLayout();
+	m_wndProperty->AdjustPagesLayout();// methode to adjust page layout
 		
 	//Shows and sets the vertical scrollbarCtrl for this screen only
 	ShowScrollBar(SB_VERT);
@@ -339,8 +338,6 @@ void CAtlasMainFrame::KillCurrentWnd(CURRENTWND enmIDwnd)
 // Handles the Vscroll control bar in the presence of the Property Screen
 void CAtlasMainFrame::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
-	// TODO: Add your message handler code here and/or call default
-
 	//test if the current screen is not the Property Window
 	if (m_enmCurrentWnd != WND_PROPERTY) return;
 
@@ -352,7 +349,7 @@ void CAtlasMainFrame::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	SCROLLINFO sbInfo;
 	GetScrollInfo(SB_VERT, &sbInfo);
 	int length = sbInfo.nMax - sbInfo.nPage;
-	int inc = 18;
+	int inc = HIWORD(GetDialogBaseUnits());
 
 	switch (nSBCode)
 	{
@@ -364,6 +361,7 @@ void CAtlasMainFrame::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 			SetScrollInfo(SB_VERT, &sbInfo, 1);
 			m_wndProperty->MoveWindow(0, (rect.top + inc) > 0 ? 0 : rect.top + inc, rect.Width(), rect.Height(), 1);
 		}
+		TRACE("nPos = %d\n", nPos);
 		break;
 	case SB_LINEDOWN:
 		if (sbInfo.nPos < length)
@@ -373,6 +371,7 @@ void CAtlasMainFrame::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 			SetScrollInfo(SB_VERT, &sbInfo, 1);
 			m_wndProperty->MoveWindow(0, (rect.top - inc) < -length ? -length : rect.top - inc, rect.Width(), rect.Height(), 1);
 		}
+		TRACE("nPos = %d\n", nPos);
 		break;
 	case SB_PAGEUP:
 		if (sbInfo.nPos != sbInfo.nMin)
@@ -392,13 +391,7 @@ void CAtlasMainFrame::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		TRACE("thumbposition\n");
 		break;
 	case SB_THUMBTRACK:
-		TRACE("thumbtrac\n");
-		break;
-	case SB_BOTTOM:
-		TRACE("bottom\n");
-		break;
-	case SB_TOP:
-		TRACE("TOP\n");
+		TRACE("nPos = %d, nTrack=%d, sbInfo.nPos=%d\n", nPos, sbInfo.nTrackPos, sbInfo.nPos);
 		break;
 	}
 	CFrameWnd::OnVScroll(nSBCode, nPos, pScrollBar); // the Default implementation does nothing, let's keep it for now!
@@ -409,8 +402,8 @@ void CAtlasMainFrame::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 void CAtlasMainFrame::OnSize(UINT nType, int cx, int cy)
 {
 	CFrameWnd::OnSize(nType, cx, cy);
-
-	// TODO: Add your message handler code here
+	
+	// Check if the current screen is the Property window, and its handle is wellformed.
 	if (m_enmCurrentWnd == WND_PROPERTY && m_wndProperty->GetSafeHwnd())
 	{
 		SCROLLINFO sbInfo;
@@ -424,32 +417,29 @@ void CAtlasMainFrame::OnSize(UINT nType, int cx, int cy)
 		m_wndProperty->GetWindowRect(&orgRect);
 		ScreenToClient(&orgRect);
 
-		int length = orgRect.Height() - clientRect.Height();
-		
-		if (length < 0)
-		{
-			m_wndProperty->CenterWindow();
-			ShowScrollBar(SB_VERT, FALSE);
-			return;
-		}
+		int newLength = orgRect.Height() - clientRect.Height();
+		int oldLength = sbInfo.nMax - sbInfo.nPage;
 
+		if (newLength < 0) //if the propertyPage height is smaller than the height of the parent window
+		{
+			ShowScrollBar(SB_VERT, FALSE); // we don't need a scrollbar, everything is visible.
+		}
+		else
+		{
+			if (sbInfo.nPos == oldLength)
+			{
+				m_wndProperty->MoveWindow(0, -newLength, clientRect.Width(), orgRect.Height(), 1);
+				sbInfo.nPos = newLength;
+				goto UPDATE_POS;
+			}
+		}
+		m_wndProperty->MoveWindow(0, 0, orgRect.Width(), orgRect.Height(), 1);
+		sbInfo.nPos = sbInfo.nMin;
+
+	UPDATE_POS:
 		sbInfo.cbSize = sizeof(SCROLLINFO);
 		sbInfo.fMask = SIF_POS|SIF_PAGE;
 		sbInfo.nPage = clientRect.Height();
-		
-		if (sbInfo.nPos != sbInfo.nMax || sbInfo.nPos!=sbInfo.nMin)
-		{
-			sbInfo.nPos = (sbInfo.nPos*sbInfo.nPage)/sbInfo.nMax;
-		}
 		SetScrollInfo(SB_VERT, &sbInfo, 1);
-		SetScrollPos(SB_VERT, sbInfo.nPos, 1);
-		/*if (orgRect.top + length < 0)
-		{
-			orgRect.top = orgRect.top + length;
-			m_wndProperty->MoveWindow(0, orgRect.top, orgRect.Width(), orgRect.Height(), 1);
-			m_wndProperty->UpdateData();
-		}*/
-			
-
 	}
 }

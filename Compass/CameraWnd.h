@@ -7,16 +7,14 @@ class CCameraWnd : public CFrameWndEx
 {
 	DECLARE_DYNCREATE(CCameraWnd)
 public:
-	enum MODE { WINDOW_MODE, VIEW_MODE };
 	CCameraWnd();
-	CCameraWnd(MODE enmMode);           
+	          
 	virtual ~CCameraWnd();
 	
 	//Embeded controles
 protected:
 	CMFCToolBar m_toolbar;
-	MODE		m_ViewMode = CCameraWnd::VIEW_MODE;
-
+	
 protected:
 	DECLARE_MESSAGE_MAP()
 
