@@ -361,7 +361,6 @@ void CAtlasMainFrame::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 			SetScrollInfo(SB_VERT, &sbInfo, 1);
 			m_wndProperty->MoveWindow(0, (rect.top + inc) > 0 ? 0 : rect.top + inc, rect.Width(), rect.Height(), 1);
 		}
-		TRACE("nPos = %d\n", nPos);
 		break;
 	case SB_LINEDOWN:
 		if (sbInfo.nPos < length)
@@ -371,7 +370,6 @@ void CAtlasMainFrame::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 			SetScrollInfo(SB_VERT, &sbInfo, 1);
 			m_wndProperty->MoveWindow(0, (rect.top - inc) < -length ? -length : rect.top - inc, rect.Width(), rect.Height(), 1);
 		}
-		TRACE("nPos = %d\n", nPos);
 		break;
 	case SB_PAGEUP:
 		if (sbInfo.nPos != sbInfo.nMin)
@@ -388,10 +386,10 @@ void CAtlasMainFrame::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 		}
 		break;
 	case SB_THUMBPOSITION:
-		TRACE("thumbposition\n");
+		SetScrollPos(SB_VERT, nPos);
 		break;
 	case SB_THUMBTRACK:
-		TRACE("nPos = %d, nTrack=%d, sbInfo.nPos=%d\n", nPos, sbInfo.nTrackPos, sbInfo.nPos);
+		m_wndProperty->MoveWindow(0, -(int)nPos, rect.Width(), rect.Height(), 1);
 		break;
 	}
 	CFrameWnd::OnVScroll(nSBCode, nPos, pScrollBar); // the Default implementation does nothing, let's keep it for now!
