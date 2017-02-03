@@ -186,8 +186,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AcquiDisplPage.h" />
-    <ClInclude Include="AtlasDlg.h" />
-    <ClInclude Include="AtlasMainFrame.h" />
+    <ClInclude Include="CompassDlg.h" />
+    <ClInclude Include="CompassMainFrame.h" />
     <ClInclude Include="CamDoc.h" />
     <ClInclude Include="CameraWnd.h" />
     <ClInclude Include="CamView.h" />
@@ -209,8 +209,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AcquiDisplPage.cpp" />
-    <ClCompile Include="AtlasDlg.cpp" />
-    <ClCompile Include="AtlasMainFrame.cpp" />
+    <ClCompile Include="CompassDlg.cpp" />
+    <ClCompile Include="CompassMainFrame.cpp" />
     <ClCompile Include="CamDoc.cpp" />
     <ClCompile Include="CameraWnd.cpp" />
     <ClCompile Include="CamView.cpp" />
@@ -240,7 +240,6 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\app-logo-64.bmp" />
-    <Image Include="res\bmp00001.bmp" />
     <Image Include="res\Compass.ico" />
     <Image Include="res\idw_came.bmp" />
     <Image Include="res\idw_caro.bmp" />

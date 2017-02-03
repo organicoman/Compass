@@ -4,28 +4,28 @@
 
 #include "stdafx.h"
 #include "Compass.h"
-#include "AtlasDlg.h"
+#include "CompassDlg.h"
 #include "afxdialogex.h"
 
 // Non Framework includes
 //
-#include "AtlasMainFrame.h"
+#include "CompassMainFrame.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-// CAtlasDlg dialog
+// CCompassDlg dialog
 
-CAtlasDlg::CAtlasDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(IDD_ATLAS_DIALOG, pParent)
+CCompassDlg::CCompassDlg(CWnd* pParent /*=NULL*/)
+	: CDialogEx(IDD_COMPASS_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 	//prepare the Table to receive data
 	m_table.Table.SetSize(12, 4);
 }
 
-void CAtlasDlg::DoDataExchange(CDataExchange* pDX)
+void CCompassDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	
@@ -46,20 +46,20 @@ void CAtlasDlg::DoDataExchange(CDataExchange* pDX)
 	//PopulateTable(tmpData);
 }
 
-BEGIN_MESSAGE_MAP(CAtlasDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CCompassDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
-	ON_COMMAND(IDC_BUTTON_CAMERA, &CAtlasDlg::OnIdwCamera)
-	ON_COMMAND(IDC_BUTTON_CAROUSEL, &CAtlasDlg::OnIdwCarousel)
-	ON_COMMAND(IDC_BUTTON_SPECTRUM, &CAtlasDlg::OnIdwSpectrum)
-	ON_COMMAND(IDC_BUTTON_PROPERTY, &CAtlasDlg::OnIdwProperty)
-	ON_COMMAND(IDC_BUTTON_ADD, &CAtlasDlg::OnButtonAdd)
+	ON_COMMAND(IDC_BUTTON_CAMERA, &CCompassDlg::OnIdwCamera)
+	ON_COMMAND(IDC_BUTTON_CAROUSEL, &CCompassDlg::OnIdwCarousel)
+	ON_COMMAND(IDC_BUTTON_SPECTRUM, &CCompassDlg::OnIdwSpectrum)
+	ON_COMMAND(IDC_BUTTON_PROPERTY, &CCompassDlg::OnIdwProperty)
+	ON_COMMAND(IDC_BUTTON_ADD, &CCompassDlg::OnButtonAdd)
 END_MESSAGE_MAP()
 
 
-// CAtlasDlg message handlers
+// CCompassDlg message handlers
 
-BOOL CAtlasDlg::OnInitDialog()
+BOOL CCompassDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
@@ -72,11 +72,11 @@ BOOL CAtlasDlg::OnInitDialog()
 	SetupTable();
 
 	// Create the MainFrame on the Heap.
-	CAtlasMainFrame* Frame = new CAtlasMainFrame;
+	CCompassMainFrame* Frame = new CCompassMainFrame;
 	ASSERT_VALID(Frame);
 	if (Frame)
 	{
-		m_pCWndAtlas = Frame;
+		m_pCWndCompass = Frame;
 		if (!CreateAtlasFrame())   //Helper Function to create the Atlas window.
 			return FALSE;
 		CMFCDynamicLayout* Layout = GetDynamicLayout(); //Get the Layout manager of the Dialog and insert the Atlas Wnd in it
@@ -84,7 +84,7 @@ BOOL CAtlasDlg::OnInitDialog()
 		CMFCDynamicLayout::SizeSettings size;
 		size.m_nXRatio = 100;
 		size.m_nYRatio = 100;
-		Layout->AddItem(m_pCWndAtlas->GetSafeHwnd(), move, size);
+		Layout->AddItem(m_pCWndCompass->GetSafeHwnd(), move, size);
 	}
 
 	// Set All the Middle Toolbar Controls to their Default Values
@@ -102,7 +102,7 @@ BOOL CAtlasDlg::OnInitDialog()
 //  to draw the icon.  For MFC applications using the document/view model,
 //  this is automatically done for you by the framework.
 
-void CAtlasDlg::OnPaint()
+void CCompassDlg::OnPaint()
 {
 	if (IsIconic())
 	{
@@ -129,15 +129,15 @@ void CAtlasDlg::OnPaint()
 
 // The system calls this function to obtain the cursor to display while the user drags
 //  the minimized window.
-HCURSOR CAtlasDlg::OnQueryDragIcon()
+HCURSOR CCompassDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-// CAtlasDlg Helper Functions
+// CCompassDlg Helper Functions
 
 // This function is called from the method: OnInitDialog().
-void CAtlasDlg::SetupTable()
+void CCompassDlg::SetupTable()
 {
 	//Populate the Table's Column Headers.
 	m_ListCtrl.InsertColumn(0, _T("Sel"), LVCFMT_LEFT, 36, 0);
@@ -154,46 +154,46 @@ void CAtlasDlg::SetupTable()
 }
 
 // Helper function to Create the Main FrameWnd
-BOOL CAtlasDlg::CreateAtlasFrame()
+BOOL CCompassDlg::CreateAtlasFrame()
 {
 	CRect rect(3, 66, 508, 362);
 	MapDialogRect(&rect);
 	
-	return m_pCWndAtlas->Create(NULL, NULL, 0UL, rect, this);
+	return m_pCWndCompass->Create(NULL, NULL, 0UL, rect, this);
 }
 
-void CAtlasDlg::OnIdwCamera()
+void CCompassDlg::OnIdwCamera()
 {
 	// TODO: Add your command handler code here
-	m_pCWndAtlas->SwitchWnd(CAtlasMainFrame::WND_CAMERA);
+	m_pCWndCompass->SwitchWnd(CCompassMainFrame::WND_CAMERA);
 }
 
-void CAtlasDlg::OnIdwCarousel()
+void CCompassDlg::OnIdwCarousel()
 {
 	// TODO: Add your command handler code here
-	m_pCWndAtlas->SwitchWnd(CAtlasMainFrame::WND_CAROUSEL);
+	m_pCWndCompass->SwitchWnd(CCompassMainFrame::WND_CAROUSEL);
 }
 
-void CAtlasDlg::OnIdwSpectrum()
+void CCompassDlg::OnIdwSpectrum()
 {
 	// TODO: Add your command handler code here
-	m_pCWndAtlas->SwitchWnd(CAtlasMainFrame::WND_SPECTRUM);
+	m_pCWndCompass->SwitchWnd(CCompassMainFrame::WND_SPECTRUM);
 }
 
-void CAtlasDlg::OnIdwProperty()
+void CCompassDlg::OnIdwProperty()
 {
 	// TODO: Add your command handler code here
-	m_pCWndAtlas->SwitchWnd(CAtlasMainFrame::WND_PROPERTY);
+	m_pCWndCompass->SwitchWnd(CCompassMainFrame::WND_PROPERTY);
 }
 
-void CAtlasDlg::OnButtonAdd()
+void CCompassDlg::OnButtonAdd()
 {
 	// TODO: Add your command handler code here
 	//This Message can come from the "ADD" toolbar button of the CarouselWnd or CameraWnd
     //check the type of the actual screen
-	using MNFRM_CW = CAtlasMainFrame::CURRENTWND; // just using an Alias to that scope
+	using MNFRM_CW = CCompassMainFrame::CURRENTWND; // just using an Alias to that scope
 	
-	switch (m_pCWndAtlas->GetCurrentScreen())
+	switch (m_pCWndCompass->GetCurrentScreen())
 	{
 	case MNFRM_CW::WND_CAROUSEL:
 		// call this function to get the data from the controls  then populate the table
@@ -207,7 +207,7 @@ void CAtlasDlg::OnButtonAdd()
 
 
 // Populate the table using the controls in the Header toolbar
-void CAtlasDlg::PopulateTable(sData& tmpData)
+void CCompassDlg::PopulateTable(sData& tmpData)
 {
 	CWaitCursor wcur;
 	static unsigned char counter = 1;

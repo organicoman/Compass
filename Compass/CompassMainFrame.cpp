@@ -3,30 +3,30 @@
 
 #include "stdafx.h"
 #include "Compass.h"
-#include "AtlasMainFrame.h"
+#include "CompassMainFrame.h"
 
-// CAtlasMainFrame
+// CCompassMainFrame
 
-CAtlasMainFrame::CAtlasMainFrame():
+CCompassMainFrame::CCompassMainFrame():
 	m_enmCurrentWnd(WND_CAROUSEL)
 {
 }
 
-CAtlasMainFrame::~CAtlasMainFrame()
+CCompassMainFrame::~CCompassMainFrame()
 {
 }
 
 
-BEGIN_MESSAGE_MAP(CAtlasMainFrame, CFrameWnd)
+BEGIN_MESSAGE_MAP(CCompassMainFrame, CFrameWnd)
 	ON_WM_VSCROLL()
 	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
 
-// CAtlasMainFrame message handlers
+// CCompassMainFrame message handlers
 
 
-BOOL CAtlasMainFrame::PreCreateWindow(CREATESTRUCT& cs)
+BOOL CCompassMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: Add your specialized code here and/or call the base class
 	cs.style = WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN;
@@ -34,7 +34,7 @@ BOOL CAtlasMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 	return CFrameWnd::PreCreateWindow(cs);
 }
 
-BOOL CAtlasMainFrame::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, LPCTSTR lpszMenuName, DWORD dwExStyle, CCreateContext* pContext)
+BOOL CCompassMainFrame::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, LPCTSTR lpszMenuName, DWORD dwExStyle, CCreateContext* pContext)
 {
 	// TODO: Add your specialized code here and/or call the base class
 	if (!CFrameWnd::Create(lpszClassName, lpszWindowName, dwStyle, rect, pParentWnd, lpszMenuName, dwExStyle, pContext))
@@ -68,7 +68,7 @@ BOOL CAtlasMainFrame::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWOR
 }
 
 // Switch between the different screens (Camera, Carousel, Spectrum...)
-BOOL CAtlasMainFrame::SwitchWnd(CURRENTWND enIDwnd)
+BOOL CCompassMainFrame::SwitchWnd(CURRENTWND enIDwnd)
 {
 	if (enIDwnd == m_enmCurrentWnd)
 	{
@@ -138,7 +138,7 @@ BOOL CAtlasMainFrame::SwitchWnd(CURRENTWND enIDwnd)
 }
 
 // Create and Populate the Carousel Wnd then Add it to the DynamicLayoutManager
-BOOL CAtlasMainFrame::SetupCarouselWnd()
+BOOL CCompassMainFrame::SetupCarouselWnd()
 {
 	CRect clientRect;
 	GetClientRect(&clientRect);
@@ -172,7 +172,7 @@ BOOL CAtlasMainFrame::SetupCarouselWnd()
 }
 
 // Create and populate the Camera Wnd
-BOOL CAtlasMainFrame::SetupCameraWnd()
+BOOL CCompassMainFrame::SetupCameraWnd()
 {
 	CRect clientRect;
 	GetClientRect(&clientRect);
@@ -206,7 +206,7 @@ BOOL CAtlasMainFrame::SetupCameraWnd()
 }
 
 // Create and populate the the Spectrum Wnd then Add it to the DynamicLayout Manger
-BOOL CAtlasMainFrame::SetupSpectrumWnd()
+BOOL CCompassMainFrame::SetupSpectrumWnd()
 {
 	CRect clientRect;
 	GetClientRect(&clientRect);
@@ -240,7 +240,7 @@ BOOL CAtlasMainFrame::SetupSpectrumWnd()
 }
 
 // Create and populate the the Property Wnd then Add it to the DynamicLayout Manger
-BOOL CAtlasMainFrame::SetupPropertyWnd()
+BOOL CCompassMainFrame::SetupPropertyWnd()
 {
 	CRect clientRect;
 	GetClientRect(&clientRect);
@@ -292,10 +292,9 @@ BOOL CAtlasMainFrame::SetupPropertyWnd()
 }
 
 // Deactivate then destroy the actual child window, to free the pointer resource.
-void CAtlasMainFrame::KillCurrentWnd(CURRENTWND enmIDwnd)
+void CCompassMainFrame::KillCurrentWnd(CURRENTWND enmIDwnd)
 {
 	// depending on the parameter; ensure that we are not destoying an already destroyed hWnd.
-	
 	switch (enmIDwnd)
 	{
 	case WND_CAROUSEL:
@@ -332,11 +331,10 @@ void CAtlasMainFrame::KillCurrentWnd(CURRENTWND enmIDwnd)
 		}
 		break;
 	}
-
 }
 
 // Handles the Vscroll control bar in the presence of the Property Screen
-void CAtlasMainFrame::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CCompassMainFrame::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
 	//test if the current screen is not the Property Window
 	if (m_enmCurrentWnd != WND_PROPERTY) return;
@@ -395,9 +393,7 @@ void CAtlasMainFrame::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	CFrameWnd::OnVScroll(nSBCode, nPos, pScrollBar); // the Default implementation does nothing, let's keep it for now!
 }
 
-
-
-void CAtlasMainFrame::OnSize(UINT nType, int cx, int cy)
+void CCompassMainFrame::OnSize(UINT nType, int cx, int cy)
 {
 	CFrameWnd::OnSize(nType, cx, cy);
 	

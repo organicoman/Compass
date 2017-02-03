@@ -1,7 +1,7 @@
 // AtlasDlg.h : header file
 //
 #pragma once
-#include "AtlasMainFrame.h"
+#include "CompassMainFrame.h"
 
 
 // Some Helper structs needed only for this project
@@ -52,16 +52,16 @@ struct sTable
 
 
 
-// CAtlasDlg dialog
-class CAtlasDlg : public CDialogEx
+// CCompassDlg dialog
+class CCompassDlg : public CDialogEx
 {
 // Construction
 public:
-	CAtlasDlg(CWnd* pParent = NULL);	// standard constructor
+	CCompassDlg(CWnd* pParent = NULL);	// standard constructor
 
 // Dialog Data
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_ATLAS_DIALOG };
+	enum { IDD = IDD_COMPASS_DIALOG };
 #endif
 
 	protected:
@@ -79,7 +79,7 @@ protected:
 
 private:
 	CListCtrl m_ListCtrl;
-	CAtlasMainFrame* m_pCWndAtlas;
+	CCompassMainFrame* m_pCWndCompass;
 	// This memeber should be transfered to Carousel CDoc object for serialization
 	sTable m_table;
 

@@ -4,7 +4,7 @@
 
 #include "stdafx.h"
 #include "Compass.h"
-#include "AtlasDlg.h"
+#include "CompassDlg.h"
 
 
 #ifdef _DEBUG
@@ -66,7 +66,7 @@ BOOL CCompassApp::InitInstance()
 	// such as the name of your company or organization
 	SetRegistryKey(_T("IXRF Systems Software Application"));
 
-	CAtlasDlg dlg;
+	CCompassDlg dlg;
 	m_pMainWnd = &dlg;
 
 	//Start the Dialog Application

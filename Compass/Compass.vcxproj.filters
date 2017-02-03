@@ -42,9 +42,6 @@
     <ClInclude Include="Compass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AtlasDlg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -52,9 +49,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AtlasMainFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CamDoc.h">
@@ -102,15 +96,15 @@
     <ClInclude Include="PropertyWnd.h">
       <Filter>Header Files\Internal Dependencies</Filter>
     </ClInclude>
+    <ClInclude Include="CompassDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CompassMainFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AtlasDlg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AtlasMainFrame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Compass.cpp">
@@ -155,6 +149,12 @@
     <ClCompile Include="AcquiDisplPage.cpp">
       <Filter>Source Files\Child Wnd\Property_Pages</Filter>
     </ClCompile>
+    <ClCompile Include="CompassDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CompassMainFrame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Compass.rc">
@@ -186,9 +186,6 @@
       <Filter>Resource Files\bitmaps</Filter>
     </Image>
     <Image Include="res\app-logo-64.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\bmp00001.bmp">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

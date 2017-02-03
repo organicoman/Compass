@@ -5,14 +5,14 @@
 #include "SpectrumWnd.h"
 #include "PropertyWnd.h"
 
-// CAtlasMainFrame frame
+// CCompassMainFrame frame
 
-class CAtlasMainFrame : public CFrameWnd
+class CCompassMainFrame : public CFrameWnd
 {
 	
 public:
-	CAtlasMainFrame();           // public constructor/desctructor no need for dynamic creation
-	~CAtlasMainFrame();			 // Non virtual destructor , this class will not be inherited
+	CCompassMainFrame();           // public constructor/desctructor no need for dynamic creation
+	~CCompassMainFrame();			 // Non virtual destructor , this class will not be inherited
 
 protected:
 	DECLARE_MESSAGE_MAP()
