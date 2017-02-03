@@ -9,10 +9,10 @@
 
 // CElementPage dialog
 
-IMPLEMENT_DYNAMIC(CElementPage, CPropertyPage)
+IMPLEMENT_DYNAMIC(CElementPage, CMFCPropertyPage)
 
 CElementPage::CElementPage()
-	: CPropertyPage(IDD_PROPPAGE_ELMNTS)
+	: CMFCPropertyPage(IDD_PROPPAGE_ELMNTS)
 {
 
 }
@@ -23,11 +23,11 @@ CElementPage::~CElementPage()
 
 void CElementPage::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CMFCPropertyPage::DoDataExchange(pDX);
 }
 
 
-BEGIN_MESSAGE_MAP(CElementPage, CPropertyPage)
+BEGIN_MESSAGE_MAP(CElementPage, CMFCPropertyPage)
 END_MESSAGE_MAP()
 
 

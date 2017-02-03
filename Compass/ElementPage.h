@@ -4,7 +4,7 @@
 
 // CElementPage dialog
 
-class CElementPage : public CPropertyPage
+class CElementPage : public CMFCPropertyPage
 {
 	DECLARE_DYNAMIC(CElementPage)
 

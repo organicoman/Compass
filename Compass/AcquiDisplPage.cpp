@@ -9,10 +9,10 @@
 
 // CAcquiDisplPage dialog
 
-IMPLEMENT_DYNAMIC(CAcquiDisplPage, CPropertyPage)
+IMPLEMENT_DYNAMIC(CAcquiDisplPage, CMFCPropertyPage)
 
 CAcquiDisplPage::CAcquiDisplPage()
-	: CPropertyPage(IDD_PROPPAGE_ACQUI_DISPL)
+	: CMFCPropertyPage(IDD_PROPPAGE_ACQUI_DISPL)
 {
 
 }
@@ -23,11 +23,11 @@ CAcquiDisplPage::~CAcquiDisplPage()
 
 void CAcquiDisplPage::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CMFCPropertyPage::DoDataExchange(pDX);
 }
 
 
-BEGIN_MESSAGE_MAP(CAcquiDisplPage, CPropertyPage)
+BEGIN_MESSAGE_MAP(CAcquiDisplPage, CMFCPropertyPage)
 END_MESSAGE_MAP()
 
 

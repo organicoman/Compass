@@ -9,10 +9,10 @@
 
 // CQuantificationPage dialog
 
-IMPLEMENT_DYNAMIC(CQuantificationPage, CPropertyPage)
+IMPLEMENT_DYNAMIC(CQuantificationPage, CMFCPropertyPage)
 
 CQuantificationPage::CQuantificationPage()
-	: CPropertyPage(IDD_PROPPAGE_QUANT)
+	: CMFCPropertyPage(IDD_PROPPAGE_QUANT)
 {
 
 }
@@ -23,14 +23,14 @@ CQuantificationPage::~CQuantificationPage()
 
 void CQuantificationPage::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CMFCPropertyPage::DoDataExchange(pDX);
 	// Get the two Tables
 	DDX_Control(pDX, IDC_COMPONENT_TABLE, m_listCtrl_Compnt);
 	DDX_Control(pDX, IDC_ANALYZE_TABLE, m_listCtrl_Analyze);
 }
 
 
-BEGIN_MESSAGE_MAP(CQuantificationPage, CPropertyPage)
+BEGIN_MESSAGE_MAP(CQuantificationPage, CMFCPropertyPage)
 END_MESSAGE_MAP()
 
 
@@ -61,7 +61,7 @@ void CQuantificationPage::SetupTables()
 
 BOOL CQuantificationPage::OnInitDialog()
 {
-	CPropertyPage::OnInitDialog();
+	CMFCPropertyPage::OnInitDialog();
 
 	// TODO:  Add extra initialization here
 	SetupTables();

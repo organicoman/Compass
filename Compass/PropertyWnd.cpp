@@ -8,7 +8,7 @@
 
 // CPropertyWnd
 
-IMPLEMENT_DYNAMIC(CPropertyWnd, CPropertySheet)
+IMPLEMENT_DYNAMIC(CPropertyWnd, CMFCPropertySheet)
 
 CPropertyWnd::CPropertyWnd()
 {
@@ -18,7 +18,7 @@ CPropertyWnd::CPropertyWnd()
 }
 
 CPropertyWnd::CPropertyWnd(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
-	:CPropertySheet(pszCaption, pParentWnd, iSelectPage)
+	:CMFCPropertySheet(pszCaption, pParentWnd, iSelectPage)
 {
 	AddPage(&pageQuant);
 	AddPage(&pageElemt);
@@ -30,7 +30,7 @@ CPropertyWnd::~CPropertyWnd()
 }
 
 
-BEGIN_MESSAGE_MAP(CPropertyWnd, CPropertySheet)
+BEGIN_MESSAGE_MAP(CPropertyWnd, CMFCPropertySheet)
 END_MESSAGE_MAP()
 
 
@@ -68,6 +68,6 @@ void CPropertyWnd::PostNcDestroy()
 {
 	// TODO: Add your specialized code here and/or call the base class
 
-	CPropertySheet::PostNcDestroy();
+	CMFCPropertySheet::PostNcDestroy();
 	if(this) delete this;
 }

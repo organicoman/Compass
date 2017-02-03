@@ -3,7 +3,7 @@
 
 // CAcquiDisplPage dialog
 
-class CAcquiDisplPage : public CPropertyPage
+class CAcquiDisplPage : public CMFCPropertyPage
 {
 	DECLARE_DYNAMIC(CAcquiDisplPage)
 

@@ -34,6 +34,12 @@
     <Filter Include="Source Files\Child Wnd\Doc_View">
       <UniqueIdentifier>{d3e7c85d-b2c6-49b3-b62c-022250e035c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Child Wnd\Screens\Camera_BackEnd">
+      <UniqueIdentifier>{a780771f-6b16-4c0e-9f57-0ba38d01e314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Internal Dependencies\Pte_pages_h">
+      <UniqueIdentifier>{445a355d-0c55-433e-96f2-b381a42b0653}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -84,15 +90,6 @@
     <ClInclude Include="Prpty_res.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QuantificationPage.h">
-      <Filter>Header Files\Internal Dependencies</Filter>
-    </ClInclude>
-    <ClInclude Include="ElementPage.h">
-      <Filter>Header Files\Internal Dependencies</Filter>
-    </ClInclude>
-    <ClInclude Include="AcquiDisplPage.h">
-      <Filter>Header Files\Internal Dependencies</Filter>
-    </ClInclude>
     <ClInclude Include="PropertyWnd.h">
       <Filter>Header Files\Internal Dependencies</Filter>
     </ClInclude>
@@ -101,6 +98,15 @@
     </ClInclude>
     <ClInclude Include="CompassMainFrame.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AcquiDisplPage.h">
+      <Filter>Header Files\Internal Dependencies\Pte_pages_h</Filter>
+    </ClInclude>
+    <ClInclude Include="ElementPage.h">
+      <Filter>Header Files\Internal Dependencies\Pte_pages_h</Filter>
+    </ClInclude>
+    <ClInclude Include="QuantificationPage.h">
+      <Filter>Header Files\Internal Dependencies\Pte_pages_h</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

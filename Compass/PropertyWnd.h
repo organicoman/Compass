@@ -7,7 +7,7 @@
 
 // CPropertyWnd
 
-class CPropertyWnd : public CPropertySheet
+class CPropertyWnd : public CMFCPropertySheet
 {
 	DECLARE_DYNAMIC(CPropertyWnd)
 

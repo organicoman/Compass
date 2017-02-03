@@ -3,7 +3,7 @@
 
 // CQuantificationPage dialog
 
-class CQuantificationPage : public CPropertyPage
+class CQuantificationPage : public CMFCPropertyPage
 {
 	DECLARE_DYNAMIC(CQuantificationPage)
 
