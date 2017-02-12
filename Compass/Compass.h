@@ -9,6 +9,7 @@
 #endif
 
 #include "resource.h"		// main symbols
+#include "Utility\XMLData.h"
 
 
 // CCompassApp:
@@ -27,6 +28,10 @@ public:
 // Implementation
 
 	DECLARE_MESSAGE_MAP()
+
+public:
+	CString m_AppDirectory;
+	
 };
 
 extern CCompassApp theApp;

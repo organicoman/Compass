@@ -1,5 +1,4 @@
-
-// AtlasDlg.cpp : implementation file
+// CompassDlg.cpp : implementation file
 //
 
 #include "stdafx.h"
@@ -219,4 +218,3 @@ void CCompassDlg::PopulateTable(sData& tmpData)
 	//update the listCtrl with these data
 
 }
-

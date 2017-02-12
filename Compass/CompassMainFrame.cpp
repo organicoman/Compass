@@ -395,7 +395,7 @@ void CCompassMainFrame::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBa
 
 void CCompassMainFrame::OnSize(UINT nType, int cx, int cy)
 {
-	CFrameWnd::OnSize(nType, cx, cy);
+	
 	
 	// Check if the current screen is the Property window, and its handle is wellformed.
 	if (m_enmCurrentWnd == WND_PROPERTY && m_wndProperty->GetSafeHwnd())
@@ -436,4 +436,6 @@ void CCompassMainFrame::OnSize(UINT nType, int cx, int cy)
 		sbInfo.nPage = clientRect.Height();
 		SetScrollInfo(SB_VERT, &sbInfo, 1);
 	}
+
+	//CFrameWnd::OnSize(nType, cx, cy);
 }

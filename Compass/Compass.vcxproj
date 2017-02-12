@@ -188,11 +188,7 @@
     <ClInclude Include="AcquiDisplPage.h" />
     <ClInclude Include="CompassDlg.h" />
     <ClInclude Include="CompassMainFrame.h" />
-    <ClInclude Include="CamDoc.h" />
     <ClInclude Include="CameraWnd.h" />
-    <ClInclude Include="CamView.h" />
-    <ClInclude Include="CarouselDoc.h" />
-    <ClInclude Include="CarouselView.h" />
     <ClInclude Include="CarouselWnd.h" />
     <ClInclude Include="Compass.h" />
     <ClInclude Include="ElementPage.h" />
@@ -200,42 +196,42 @@
     <ClInclude Include="QuantificationPage.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Prpty_res.h" />
-    <ClInclude Include="SpectrumDoc.h" />
+    <ClInclude Include="SettingDlg.h" />
     <ClInclude Include="SpectrumWnd.h" />
-    <ClInclude Include="SperctrumView.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Symbols.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Utility\tinyxml2.h" />
+    <ClInclude Include="Utility\VideoCapture.h" />
+    <ClInclude Include="Utility\XMLData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AcquiDisplPage.cpp" />
     <ClCompile Include="CompassDlg.cpp" />
     <ClCompile Include="CompassMainFrame.cpp" />
-    <ClCompile Include="CamDoc.cpp" />
     <ClCompile Include="CameraWnd.cpp" />
-    <ClCompile Include="CamView.cpp" />
-    <ClCompile Include="CarouselDoc.cpp" />
-    <ClCompile Include="CarouselView.cpp" />
     <ClCompile Include="CarouselWnd.cpp" />
     <ClCompile Include="Compass.cpp" />
     <ClCompile Include="ElementPage.cpp" />
     <ClCompile Include="PropertyWnd.cpp" />
     <ClCompile Include="QuantificationPage.cpp" />
-    <ClCompile Include="SpectrumDoc.cpp" />
+    <ClCompile Include="SettingDlg.cpp" />
     <ClCompile Include="SpectrumWnd.cpp" />
-    <ClCompile Include="SperctrumView.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Utility\tinyxml2.cpp" />
+    <ClCompile Include="Utility\VideoCapture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Compass.rc" />
     <ResourceCompile Include="Properties.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="res\Compass.rc2" />
   </ItemGroup>
   <ItemGroup>

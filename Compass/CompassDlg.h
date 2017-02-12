@@ -1,8 +1,7 @@
-// AtlasDlg.h : header file
+// CompassDlg.h : header file
 //
 #pragma once
 #include "CompassMainFrame.h"
-
 
 // Some Helper structs needed only for this project
 struct sData

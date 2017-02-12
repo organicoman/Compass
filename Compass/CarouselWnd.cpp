@@ -1,5 +1,6 @@
 // CarouselWnd.cpp : implementation file
 //
+#pragma once
 
 #include "stdafx.h"
 #include "Compass.h"
@@ -17,7 +18,6 @@ CCarouselWnd::~CCarouselWnd()
 {
 }
 
-
 BEGIN_MESSAGE_MAP(CCarouselWnd, CFrameWndEx)
 	ON_WM_CREATE()
 	ON_COMMAND(IDC_BUTTON_VIEW, &CCarouselWnd::OnViewButtonClicked)
@@ -25,9 +25,7 @@ BEGIN_MESSAGE_MAP(CCarouselWnd, CFrameWndEx)
 	ON_WM_SIZE()
 END_MESSAGE_MAP()
 
-
 // CCarouselWnd message handlers
-
 
 int CCarouselWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {

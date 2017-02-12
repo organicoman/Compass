@@ -25,20 +25,20 @@
     <Filter Include="Resource Files\bitmaps">
       <UniqueIdentifier>{5bdbc8d2-015f-4f02-a662-0f933510b940}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Child Wnd\Property_Pages">
-      <UniqueIdentifier>{f8856dc0-7fd8-42d6-bccd-277bc11ff9ec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Child Wnd\Screens">
       <UniqueIdentifier>{587b809d-5fe6-4c6d-af9a-ddb7ad7485bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Child Wnd\Doc_View">
-      <UniqueIdentifier>{d3e7c85d-b2c6-49b3-b62c-022250e035c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Child Wnd\Screens\Camera_BackEnd">
-      <UniqueIdentifier>{a780771f-6b16-4c0e-9f57-0ba38d01e314}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Internal Dependencies\Pte_pages_h">
       <UniqueIdentifier>{445a355d-0c55-433e-96f2-b381a42b0653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Child Wnd\Screens\Property_Pages">
+      <UniqueIdentifier>{f8856dc0-7fd8-42d6-bccd-277bc11ff9ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Utility_h">
+      <UniqueIdentifier>{8f56462a-a450-4d0f-a38e-d63c0e4ff826}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility_cpp">
+      <UniqueIdentifier>{a780771f-6b16-4c0e-9f57-0ba38d01e314}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -57,38 +57,17 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CamDoc.h">
-      <Filter>Header Files\Internal Dependencies</Filter>
-    </ClInclude>
     <ClInclude Include="CameraWnd.h">
-      <Filter>Header Files\Internal Dependencies</Filter>
-    </ClInclude>
-    <ClInclude Include="CamView.h">
-      <Filter>Header Files\Internal Dependencies</Filter>
-    </ClInclude>
-    <ClInclude Include="CarouselDoc.h">
-      <Filter>Header Files\Internal Dependencies</Filter>
-    </ClInclude>
-    <ClInclude Include="CarouselView.h">
       <Filter>Header Files\Internal Dependencies</Filter>
     </ClInclude>
     <ClInclude Include="CarouselWnd.h">
       <Filter>Header Files\Internal Dependencies</Filter>
     </ClInclude>
-    <ClInclude Include="SpectrumDoc.h">
-      <Filter>Header Files\Internal Dependencies</Filter>
-    </ClInclude>
     <ClInclude Include="SpectrumWnd.h">
-      <Filter>Header Files\Internal Dependencies</Filter>
-    </ClInclude>
-    <ClInclude Include="SperctrumView.h">
       <Filter>Header Files\Internal Dependencies</Filter>
     </ClInclude>
     <ClInclude Include="Symbols.h">
       <Filter>Header Files\Internal Dependencies</Filter>
-    </ClInclude>
-    <ClInclude Include="Prpty_res.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PropertyWnd.h">
       <Filter>Header Files\Internal Dependencies</Filter>
@@ -108,6 +87,21 @@
     <ClInclude Include="QuantificationPage.h">
       <Filter>Header Files\Internal Dependencies\Pte_pages_h</Filter>
     </ClInclude>
+    <ClInclude Include="SettingDlg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Prpty_res.h">
+      <Filter>Header Files\Internal Dependencies\Pte_pages_h</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\VideoCapture.h">
+      <Filter>Header Files\Utility_h</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\tinyxml2.h">
+      <Filter>Header Files\Utility_h</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\XMLData.h">
+      <Filter>Header Files\Utility_h</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -117,7 +111,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QuantificationPage.cpp">
-      <Filter>Source Files\Child Wnd\Property_Pages</Filter>
+      <Filter>Source Files\Child Wnd\Screens\Property_Pages</Filter>
     </ClCompile>
     <ClCompile Include="CameraWnd.cpp">
       <Filter>Source Files\Child Wnd\Screens</Filter>
@@ -131,35 +125,26 @@
     <ClCompile Include="SpectrumWnd.cpp">
       <Filter>Source Files\Child Wnd\Screens</Filter>
     </ClCompile>
-    <ClCompile Include="CamDoc.cpp">
-      <Filter>Source Files\Child Wnd\Doc_View</Filter>
-    </ClCompile>
-    <ClCompile Include="CamView.cpp">
-      <Filter>Source Files\Child Wnd\Doc_View</Filter>
-    </ClCompile>
-    <ClCompile Include="CarouselDoc.cpp">
-      <Filter>Source Files\Child Wnd\Doc_View</Filter>
-    </ClCompile>
-    <ClCompile Include="CarouselView.cpp">
-      <Filter>Source Files\Child Wnd\Doc_View</Filter>
-    </ClCompile>
-    <ClCompile Include="SpectrumDoc.cpp">
-      <Filter>Source Files\Child Wnd\Doc_View</Filter>
-    </ClCompile>
-    <ClCompile Include="SperctrumView.cpp">
-      <Filter>Source Files\Child Wnd\Doc_View</Filter>
-    </ClCompile>
     <ClCompile Include="ElementPage.cpp">
-      <Filter>Source Files\Child Wnd\Property_Pages</Filter>
+      <Filter>Source Files\Child Wnd\Screens\Property_Pages</Filter>
     </ClCompile>
     <ClCompile Include="AcquiDisplPage.cpp">
-      <Filter>Source Files\Child Wnd\Property_Pages</Filter>
+      <Filter>Source Files\Child Wnd\Screens\Property_Pages</Filter>
     </ClCompile>
     <ClCompile Include="CompassDlg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CompassMainFrame.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\VideoCapture.cpp">
+      <Filter>Source Files\Utility_cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\tinyxml2.cpp">
+      <Filter>Source Files\Utility_cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +159,7 @@
     <None Include="res\Compass.rc2">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Compass.ico">
@@ -192,7 +178,7 @@
       <Filter>Resource Files\bitmaps</Filter>
     </Image>
     <Image Include="res\app-logo-64.bmp">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\bitmaps</Filter>
     </Image>
   </ItemGroup>
 </Project>
