@@ -144,7 +144,7 @@ CameraObj::RETURNCODE CameraObj::EnumerateCams(std::vector<sCamera>& buf) const
 	return RETURN_ERROR;
 }
 
-CameraObj::RETURNCODE CameraObj::ConnectToCam(const sCamera & camera)
+CameraObj::RETURNCODE CameraObj::ConnectToCam(const CString camPath)
 {
 	ICreateDevEnum* pDevEnum = NULL;
 	IEnumMoniker* pDevMoniker = NULL;
@@ -192,7 +192,7 @@ CameraObj::RETURNCODE CameraObj::ConnectToCam(const sCamera & camera)
 			continue; //next device.
 		}
 		CString temp(var.bstrVal);
-		if (!temp.Compare(camera.strID)) // returns 0 on identity.
+		if (!temp.Compare(camPath)) // returns 0 on identity.
 		{
 			VariantClear(&var);
 			pBag->Release();

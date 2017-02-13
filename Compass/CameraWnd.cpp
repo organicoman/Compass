@@ -5,6 +5,7 @@
 #include "Compass.h"
 #include "CameraWnd.h"
 
+
 // CCameraWnd
 
 IMPLEMENT_DYNCREATE(CCameraWnd, CFrameWndEx)
@@ -75,7 +76,7 @@ int CCameraWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;
 
 	// 2nd Connect to the camera (this should be selected in the SettingDlg)
-	ret = m_VideoCam->ConnectToCam(m_CamList[1]);
+	ret = m_VideoCam->ConnectToCam(theApp.m_ActualSettings.m_strCurrentCamPath);
 	if (ret != CameraObj::RETURN_SUCCESS)
 		return -1;
 	

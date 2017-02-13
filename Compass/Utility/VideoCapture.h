@@ -6,7 +6,7 @@
 #include <sal.h>
 
 #include <vector>
-#include <afx.h>
+
 
 #ifdef DLL
 #define _API_ __declspec(dllexport)
@@ -58,7 +58,7 @@ public:
 
 	// initialize the COM library, look for the camera using it's "camera.strID" and build the filterGraph object.
 	// Closing the Com library is done in the destructor of the object instance.
-	RETURNCODE ConnectToCam(const sCamera& camera);
+	RETURNCODE ConnectToCam(const CString camPath);
 
 	// After the Cam was Connected, 
 	// Call this method to build the filterGraph and start streaming video(the Aspect Ratio is respected).

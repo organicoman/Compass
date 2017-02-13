@@ -201,9 +201,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Symbols.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Utility\tinyxml2.h" />
     <ClInclude Include="Utility\VideoCapture.h" />
-    <ClInclude Include="Utility\XMLData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AcquiDisplPage.cpp" />
@@ -223,7 +221,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Utility\tinyxml2.cpp" />
     <ClCompile Include="Utility\VideoCapture.cpp" />
   </ItemGroup>
   <ItemGroup>

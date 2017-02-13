@@ -96,12 +96,6 @@
     <ClInclude Include="Utility\VideoCapture.h">
       <Filter>Header Files\Utility_h</Filter>
     </ClInclude>
-    <ClInclude Include="Utility\tinyxml2.h">
-      <Filter>Header Files\Utility_h</Filter>
-    </ClInclude>
-    <ClInclude Include="Utility\XMLData.h">
-      <Filter>Header Files\Utility_h</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -141,9 +135,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Utility\VideoCapture.cpp">
-      <Filter>Source Files\Utility_cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Utility\tinyxml2.cpp">
       <Filter>Source Files\Utility_cpp</Filter>
     </ClCompile>
   </ItemGroup>

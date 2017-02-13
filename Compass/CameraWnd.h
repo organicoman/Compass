@@ -1,6 +1,7 @@
 #pragma once
-#include "Symbols.h"
 #include "Utility/VideoCapture.h"
+#include "Symbols.h"
+
 
 // CCameraWnd frame
 
@@ -12,7 +13,7 @@ public:
 	          
 	virtual ~CCameraWnd();
 	
-	//Embeded controles
+	//Embedded controls
 protected:
 	CameraObj* m_VideoCam;
 	CMFCButton m_CaptureBtn;

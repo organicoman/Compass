@@ -26,26 +26,7 @@ CCompassApp::CCompassApp()
 {
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
-	CString CompassDirectory;
-
-	BOOL err = CompassDirectory.GetEnvironmentVariable(_T("LOCALAPPDATA")); //on failure use the "\\Temp" folder
-
-	if (!err)
-		CompassDirectory.GetEnvironmentVariable(_T("TEMP"));
-
-	CompassDirectory = CompassDirectory + CString(_T("\\Compass"));
-
-	// Create this directory and save its path in AppDirectory
-	BOOL bErr = CreateDirectory(CompassDirectory, 0);
-	if (bErr == ERROR_PATH_NOT_FOUND)
-	{
-		TRACE("Failed to Create the Application Directory!\n");
-		m_AppDirectory = _T(".");
-	}
-	else
-	{
-		m_AppDirectory = CompassDirectory;
-	}
+	
 }
 
 
@@ -85,17 +66,20 @@ BOOL CCompassApp::InitInstance()
 	// Change the registry key under which our settings are stored
 	// TODO: You should modify this string to be something appropriate
 	// such as the name of your company or organization
-	SetRegistryKey(_T("IXRF Systems Software Application"));
+	SetRegistryKey(_T("IXRFSystems"));
+	
+	// Setup the registry profile settings.
+	m_bIsRegistryOK = _CreateProfile();
 
-	// Welcome screen
-	//CSettingDlg setup(m_AppDirectory);
-	//INT_PTR nRet = setup.DoModal();
-	//
-	//if (nRet == IDOK)
-	//{
-	//	TRACE("Filled the Config File with the user settings\n ");
-	//	setup.~CSettingDlg(); //yes calling to destructor, we don't need this object anymore.
-	//}
+	// Welcome screen, Pass the m_bIsRegistryOK flag.
+	CSettingDlg setupDlg(m_bIsRegistryOK);
+	INT_PTR nRet = setupDlg.DoModal();
+	
+	if (nRet == IDOK)
+	{
+		// Transfer the User Selection to the App member structure 
+		m_ActualSettings = setupDlg.m_CurrentSetting;
+	}
 	
 	CCompassDlg dlg;
 	m_pMainWnd = &dlg;
@@ -121,4 +105,66 @@ BOOL CCompassApp::InitInstance()
 	// Since the dialog has been closed, return FALSE so that we exit the
 	//  application, rather than start the application's message pump.
 	return FALSE;
+}
+
+BOOL CCompassApp::_CreateProfile()
+{
+#define SECTION_CAROUSEL _T("Carousel")
+#define N_SLOTS_KEY _T("Number of Slots")
+#define SECTION_CAMERA _T("Camera")
+#define CAMERA_NAME_KEY _T("Camera Name")
+#define CAMERA_ID_KEY _T("Camera Path")
+#define EMPTY _T("N/A")
+
+	BOOL ret;
+	
+	int nSlots = GetProfileInt(SECTION_CAROUSEL, N_SLOTS_KEY, -1/*as an error ret value*/);
+	if (nSlots == -1)
+	{
+		ret = WriteProfileInt(SECTION_CAROUSEL, N_SLOTS_KEY, 8/*by default*/);
+		if(!ret)
+			return ret;
+	}
+	
+	CString CameraName = GetProfileString(SECTION_CAMERA, CAMERA_NAME_KEY,EMPTY);
+	if (CameraName == EMPTY)
+	{
+		ret = WriteProfileString(SECTION_CAMERA, CAMERA_NAME_KEY, EMPTY);
+		if(!ret)
+			return ret;
+	}
+	
+	CString CameraID = GetProfileString(SECTION_CAMERA, CAMERA_ID_KEY, EMPTY);
+	if (CameraID == EMPTY)
+	{
+		ret = WriteProfileString(SECTION_CAMERA, CAMERA_ID_KEY, EMPTY);
+		if (!ret)
+			return ret;
+	}
+
+	// Otherwise Store all the above valid data into the member Variable 
+	m_ActualSettings = { nSlots, CameraName, CameraID };
+	
+	return TRUE;
+}
+
+
+int CCompassApp::ExitInstance()
+{
+	// TODO: Add your specialized code here and/or call the base class
+	// Upon Exit save the Current profile setting to the registry for later use.
+#define SECTION_CAROUSEL _T("Carousel")
+#define N_SLOTS_KEY _T("Number of Slots")
+#define SECTION_CAMERA _T("Camera")
+#define CAMERA_NAME_KEY _T("Camera Name")
+#define CAMERA_ID_KEY _T("Camera Path")
+#define EMPTY _T("N/A")
+	
+	BOOL ret1 = WriteProfileInt(SECTION_CAROUSEL, N_SLOTS_KEY, m_ActualSettings.m_nSlots);
+	BOOL ret2 = WriteProfileString(SECTION_CAMERA, CAMERA_NAME_KEY, m_ActualSettings.m_strCurrentCamFriendlyName);
+	BOOL ret3 = WriteProfileString(SECTION_CAMERA, CAMERA_ID_KEY, m_ActualSettings.m_strCurrentCamPath);
+	if(!ret1 || !ret2 || !ret3)
+		AfxMessageBox(_T("COMPASS FAILURE: Couldn't save the current user's settings!\n"), MB_OK);
+	
+	return CWinApp::ExitInstance();
 }

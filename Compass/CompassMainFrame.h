@@ -11,7 +11,7 @@ class CCompassMainFrame : public CFrameWnd
 {
 	
 public:
-	CCompassMainFrame();           // public constructor/desctructor no need for dynamic creation
+	CCompassMainFrame();           // public constructor/destructor no need for dynamic creation
 	~CCompassMainFrame();			 // Non virtual destructor , this class will not be inherited
 
 protected:
