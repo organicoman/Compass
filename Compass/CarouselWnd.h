@@ -13,10 +13,10 @@ public:
 
 	//Embeded controles
 protected:
-	CMFCToolBar m_toolbar;
 	CWnd* m_Camera = nullptr;
 	BOOL fCamOnOff = FALSE;
-
+	CMFCButton m_CamBtn;
+	CMFCButton m_AddBtn;
 protected:
 	DECLARE_MESSAGE_MAP()
 
@@ -26,5 +26,6 @@ public:
 	afx_msg void OnViewButtonClicked();
 	afx_msg void OnPaint();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	void CleanUp();
 };
 

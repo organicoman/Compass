@@ -39,7 +39,10 @@ public:
 public:
 	// the CameraObj can be Attached to One on Only One CWnd*, which must not be a null pointer.
 	explicit CameraObj(const CWnd* parent);
+
+	// the Output Video will respect the Original Aspect ratio inside the "destRect" argument.
 	CameraObj(const CWnd* parent, CRect destRect);
+
 	virtual ~CameraObj();
 
 protected:
@@ -57,17 +60,24 @@ public:
 	// Closing the Com library is done in the destructor of the object instance.
 	RETURNCODE ConnectToCam(const sCamera& camera);
 
-	// After the Cam was Connected, Call this method to build the filterGraph and start streaming video.
+	// After the Cam was Connected, 
+	// Call this method to build the filterGraph and start streaming video(the Aspect Ratio is respected).
 	RETURNCODE Run();
 
 	// Pauses the Graph if it is in Running state.
 	CameraObj::RETURNCODE Pause() const;
 
-	// Resumes Playing after a Pause operation
+	// Resumes Playing after a Pause/Stop operation
 	CameraObj::RETURNCODE Play() const;
 
 	// Get the State of the filterGraph;(0 = STOP/PAUSED, 1 = RUNNING, anything else is error).
 	int GetCurrentRunState()const;
+
+	// Get Ideal Image size and it's Aspect Ratio.
+	CameraObj::RETURNCODE GetNativeVideoDim(LONG& width, LONG& height, LONG& ARwidth, LONG& ARheight) const;
+
+	// Update the Size of the Output rectangle if the container Window changes Size.
+	CameraObj::RETURNCODE UpdateSize();
 
 	CameraObj::RETURNCODE CaptureImage(CBitmap& imageBuf) const;
 	//RETURNCODE RecordVideo(const CString& filePath);

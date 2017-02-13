@@ -3,7 +3,7 @@
 #pragma once
 #include "CompassMainFrame.h"
 
-// Some Helper structs needed only for this project
+// Some Helper structure needed only for this project
 struct sData
 {
 	UINT spot;
@@ -79,15 +79,16 @@ protected:
 private:
 	CListCtrl m_ListCtrl;
 	CCompassMainFrame* m_pCWndCompass;
-	// This memeber should be transfered to Carousel CDoc object for serialization
+	// This member should be transfered to Carousel CDoc object for serialization
 	sTable m_table;
 
 // Helper Functions.
 public:
 	void SetupTable();
+	void SetupIcons();
 
 	// Helper function to Create the Main FrameWnd
-	BOOL CreateAtlasFrame();
+	BOOL CreateCompassFrame();
 	afx_msg void OnIdwCamera();
 	afx_msg void OnIdwCarousel();
 	afx_msg void OnIdwSpectrum();

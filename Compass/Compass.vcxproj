@@ -237,9 +237,11 @@
   <ItemGroup>
     <Image Include="res\app-logo-64.bmp" />
     <Image Include="res\Compass.ico" />
+    <Image Include="res\Globals_48x48.png" />
     <Image Include="res\idw_came.bmp" />
     <Image Include="res\idw_caro.bmp" />
     <Image Include="res\idw_spec.bmp" />
+    <Image Include="res\Table_24x24.png" />
     <Image Include="res\Toolbar256.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

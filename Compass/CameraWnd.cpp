@@ -5,8 +5,6 @@
 #include "Compass.h"
 #include "CameraWnd.h"
 
-
-
 // CCameraWnd
 
 IMPLEMENT_DYNCREATE(CCameraWnd, CFrameWndEx)
@@ -25,6 +23,8 @@ BEGIN_MESSAGE_MAP(CCameraWnd, CFrameWndEx)
 	ON_WM_CREATE()
 	ON_WM_ERASEBKGND()
 	ON_WM_SHOWWINDOW()
+	ON_WM_SIZE()
+	ON_WM_PAINT()
 END_MESSAGE_MAP()
 
 BOOL CCameraWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd,
@@ -56,33 +56,18 @@ int CCameraWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CFrameWndEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
-
-	// TODO:  Add your specialized creation code here
-	m_toolbar.EnableLargeIcons(TRUE);
-
-	if (!m_toolbar.Create(this, WS_CHILD | WS_VISIBLE | CBRS_RIGHT | CBRS_SIZE_FIXED | CBRS_TOOLTIPS) ||
-		!m_toolbar.LoadToolBar(IDW_CAMERA))
-	{
-		TRACE0("Failed to create and load Camera ToolBar\n");
-		return-1;
-	}
-	m_toolbar.EnableTextLabels();
-	CString labels[] = { _T("CAP"), _T("GRA"), _T("NOTE") };
-	for (int i = 0; i<m_toolbar.GetCount(); i++)
-	{
-		CMFCToolBarButton* btn = m_toolbar.GetButton(i);
-
-		btn->m_bText = TRUE;
-		btn->m_bImage = FALSE;
-		m_toolbar.SetButtonText(i, labels[i]);
-	}
-
-
-	EnableDocking(CBRS_ALIGN_ANY);
-	DockPane(&m_toolbar);
+	// Initialize the Graticule Button and the Capture Button.
+	int w = 32;
+	int h = 32;
+	int xPos = 3;
+	int yPos = 3;
+	
+	
+	m_CaptureBtn.Create(_T("CAP"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, CRect(xPos, yPos, xPos + w, yPos + h), this, IDC_BUTTON_CAPTURE);
+	m_GraticuleBtn.Create(_T("GRA"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, CRect(xPos+w+3, yPos, xPos+2*w+3, yPos + h), this, IDC_BUTTON_GRATICULE);
 
 	// This Window exists for the sole purpose of hosting the Video Stream,
-	// so we cannot get that stream then return error, to cancel creation.
+	// so if we cannot get that stream then return error, to cancel creation.
 
 	// 1st Enumerate the Capture devices
 	CameraObj::RETURNCODE ret = m_VideoCam->EnumerateCams(m_CamList);
@@ -117,4 +102,13 @@ void CCameraWnd::OnShowWindow(BOOL bShow, UINT nStatus)
 			TRACE("FAILURE: The Video Capture System could not be run!\n");
 	}
 	// TODO: Add your message handler code here
+}
+
+
+void CCameraWnd::OnSize(UINT nType, int cx, int cy)
+{
+	CFrameWndEx::OnSize(nType, cx, cy);
+	
+	// TODO: Add your message handler code here
+	m_VideoCam->UpdateSize();
 }

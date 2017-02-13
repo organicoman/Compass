@@ -14,8 +14,10 @@ public:
 	
 	//Embeded controles
 protected:
-	CMFCToolBar m_toolbar;
 	CameraObj* m_VideoCam;
+	CMFCButton m_CaptureBtn;
+	CMFCButton m_GraticuleBtn;
+
 	std::vector<sCamera> m_CamList;
 	
 protected:
@@ -27,6 +29,7 @@ public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg void OnShowWindow(BOOL bShow, UINT nStatus);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 };
 
 

@@ -76,19 +76,20 @@ BOOL CCompassMainFrame::SwitchWnd(CURRENTWND enIDwnd)
 		return TRUE;
 	}
 
-	//Create the selected window, set it as the actual frame then destory the old one, and display this one
+	//Create the selected window, set it as the actual frame then destroy the old one, and display this one
 	
 	switch (enIDwnd)
 	{
 	case WND_CAMERA:
 		if (m_wndCamera == nullptr) //if pointer is null then create the wnd
 		{
+			CWaitCursor cur;
+			KillCurrentWnd(m_enmCurrentWnd);//the order of destroy/Create was flipped here because of COM initialization.
 			if (SetupCameraWnd() == FALSE)
 			{
 				TRACE0("Error creating the Camera Window\n");
 				return FALSE;
 			}
-			KillCurrentWnd(m_enmCurrentWnd);//Breakpoint here if you think that this function causes flickering
 		}
 		m_enmCurrentWnd = enIDwnd;
 		break;

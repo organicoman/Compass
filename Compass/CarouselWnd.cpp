@@ -31,30 +31,16 @@ int CCarouselWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CFrameWndEx::OnCreate(lpCreateStruct) == -1)
 		return -1;
+	// Initialize the Add and Cam Buttons
+	int w = 32;
+	int h = 32;
+	int xPos = 3;
+	int yPos = 3;
 	
-	m_toolbar.EnableLargeIcons(TRUE);
+	m_CamBtn.Create(_T("CAM"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, CRect(xPos, yPos, xPos + w, yPos + h), this, IDC_BUTTON_VIEW);
+	m_AddBtn.Create(_T("ADD"), WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, CRect(xPos + w + 3, yPos, xPos + 2 * w + 3, yPos + h), this, IDC_BUTTON_ADD);
 
-	if (!m_toolbar.Create(this,WS_CHILD|WS_VISIBLE|CBRS_RIGHT|CBRS_SIZE_FIXED|CBRS_TOOLTIPS)||
-		!m_toolbar.LoadToolBar(IDW_CAROUSEL))
-	{
-		TRACE0("Failed to create and load Carousel ToolBar\n");
-		return-1;
-	}
-	m_toolbar.EnableTextLabels();
-	CString labels[] = { _T("ADD"), _T("CAPT"), _T("GRAT"), _T(""),_T("CAM") };
-	for (int i=0; i<m_toolbar.GetCount();i++)
-	{
-		CMFCToolBarButton* btn = m_toolbar.GetButton(i);
 		
-		btn->m_bText = TRUE;
-		btn->m_bImage = FALSE;
-		m_toolbar.SetButtonText(i, labels[i]);
-	}
-	
-	
-	EnableDocking(CBRS_ALIGN_ANY);
-	DockPane(&m_toolbar);
-	
 	return 0;
 }
 
@@ -85,15 +71,17 @@ BOOL CCarouselWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD d
 
 void CCarouselWnd::OnViewButtonClicked()
 {
+	CWaitCursor cur;
+
 	if (fCamOnOff == FALSE)
 	{
 		CRect rect;
 		GetClientRect(&rect);
 		int x = rect.Width() / 2;
 		int y = 5;
-		rect.left = x - 50;
+		rect.left = x - 5;
 		rect.top = y;
-		rect.right = rect.right - 50;
+		rect.right = rect.right - 5;
 		rect.bottom = rect.Height() / 2 - 5;
 		
 		m_Camera = new CCameraWnd;
@@ -107,13 +95,20 @@ void CCarouselWnd::OnViewButtonClicked()
 	}
 	else
 	{
-		m_Camera->DestroyWindow();
-		m_Camera = nullptr;
-		fCamOnOff = FALSE;
+		CleanUp();
 	}
 	
 }
 
+void CCarouselWnd::CleanUp()
+{
+	if (fCamOnOff)
+	{
+		m_Camera->DestroyWindow();
+		m_Camera = nullptr;
+		fCamOnOff = FALSE;
+	}
+}
 
 void CCarouselWnd::OnPaint()
 {
@@ -150,9 +145,9 @@ void CCarouselWnd::OnSize(UINT nType, int cx, int cy)
 		GetClientRect(&rect);
 		int x = rect.Width() / 2;
 		int y = 5;
-		rect.left = x - 50;
+		rect.left = x - 5;
 		rect.top = y;
-		rect.right = rect.right - 50;
+		rect.right = rect.right - 5;
 		rect.bottom = rect.Height() / 2 - 5;
 
 		m_Camera->MoveWindow(&rect);

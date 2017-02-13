@@ -180,5 +180,11 @@
     <Image Include="res\app-logo-64.bmp">
       <Filter>Resource Files\bitmaps</Filter>
     </Image>
+    <Image Include="res\Globals_48x48.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\Table_24x24.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

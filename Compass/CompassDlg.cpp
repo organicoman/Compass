@@ -69,14 +69,16 @@ BOOL CCompassDlg::OnInitDialog()
 	SetBackgroundColor(RGB(54, 69, 79));
 	// Initialize the Data Table (m_ListCtrl)
 	SetupTable();
-
+	
+	// Give each Button the Appropriate Icon.
+	SetupIcons();
 	// Create the MainFrame on the Heap.
 	CCompassMainFrame* Frame = new CCompassMainFrame;
 	ASSERT_VALID(Frame);
 	if (Frame)
 	{
 		m_pCWndCompass = Frame;
-		if (!CreateAtlasFrame())   //Helper Function to create the Atlas window.
+		if (!CreateCompassFrame())   //Helper Function to create the Atlas window.
 			return FALSE;
 		CMFCDynamicLayout* Layout = GetDynamicLayout(); //Get the Layout manager of the Dialog and insert the Atlas Wnd in it
 		CMFCDynamicLayout::MoveSettings move;
@@ -86,7 +88,7 @@ BOOL CCompassDlg::OnInitDialog()
 		Layout->AddItem(m_pCWndCompass->GetSafeHwnd(), move, size);
 	}
 
-	// Set All the Middle Toolbar Controls to their Default Values
+	// Set All the Middle Tool-bar Controls to their Default Values
 	SendDlgItemMessage(IDC_COMBO_POS, CB_SETCURSEL);// index n=0 is implied, check the doc.
 	SendDlgItemMessage(IDC_COMBO_PRESET, CB_SETCURSEL);
 	SendDlgItemMessage(IDC_COMBO_ATMOSPHERE, CB_SETCURSEL);
@@ -152,8 +154,32 @@ void CCompassDlg::SetupTable()
 	//m_ListCtrl.InsertColumn(10, _T("Keep Capture"), LVCFMT_LEFT, 80, 10);
 }
 
+void CCompassDlg::SetupIcons()
+{
+	CMFCToolBarImages images;
+	BOOL bResult;
+	images.SetImageSize(CSize(48, 48));
+	bResult = images.Load(IDB_PNG_GLOBALS);
+
+	SendDlgItemMessage(IDC_BUTTON_PROPERTY, BM_SETIMAGE, IMAGE_ICON, (LPARAM)images.ExtractIcon(0));
+	SendDlgItemMessage(IDC_BUTTON_REPORT, BM_SETIMAGE, IMAGE_ICON, (LPARAM)images.ExtractIcon(1));
+	SendDlgItemMessage(IDC_BUTTON_SPECTRUM, BM_SETIMAGE, IMAGE_ICON, (LPARAM)images.ExtractIcon(2));
+	SendDlgItemMessage(IDC_BUTTON_CAMERA, BM_SETIMAGE, IMAGE_ICON, (LPARAM)images.ExtractIcon(3));
+	SendDlgItemMessage(IDC_BUTTON_CAROUSEL, BM_SETIMAGE, IMAGE_ICON, (LPARAM)images.ExtractIcon(4));
+
+	images.SetImageSize(CSize(24, 24));
+	bResult = images.Load(IDB_PNG_TABLE);
+
+	SendDlgItemMessage(IDC_BUTTON_START, BM_SETIMAGE, IMAGE_ICON, (LPARAM)images.ExtractIcon(0));
+	SendDlgItemMessage(IDC_BUTTON_LOAD, BM_SETIMAGE, IMAGE_ICON, (LPARAM)images.ExtractIcon(1));
+	SendDlgItemMessage(IDC_BUTTON_SAVE, BM_SETIMAGE, IMAGE_ICON, (LPARAM)images.ExtractIcon(2));
+	SendDlgItemMessage(IDC_BUTTON_DELETE, BM_SETIMAGE, IMAGE_ICON, (LPARAM)images.ExtractIcon(3));
+	SendDlgItemMessage(IDC_BUTTON_MOVE, BM_SETIMAGE, IMAGE_ICON, (LPARAM)images.ExtractIcon(4));
+	
+}
+
 // Helper function to Create the Main FrameWnd
-BOOL CCompassDlg::CreateAtlasFrame()
+BOOL CCompassDlg::CreateCompassFrame()
 {
 	CRect rect(3, 66, 508, 362);
 	MapDialogRect(&rect);
@@ -188,7 +214,7 @@ void CCompassDlg::OnIdwProperty()
 void CCompassDlg::OnButtonAdd()
 {
 	// TODO: Add your command handler code here
-	//This Message can come from the "ADD" toolbar button of the CarouselWnd or CameraWnd
+	//This Message can come from the "ADD" tool-bar button of the CarouselWnd or CameraWnd
     //check the type of the actual screen
 	using MNFRM_CW = CCompassMainFrame::CURRENTWND; // just using an Alias to that scope
 	
@@ -199,7 +225,7 @@ void CCompassDlg::OnButtonAdd()
 		UpdateData(TRUE); //CWnd method TRUE means perform data exchange with the controls
 		break;
 	case MNFRM_CW::WND_CAMERA:
-		// Id on't know yet what his button do??
+		// Idon't know yet what his button do??
 		break;
 	}
 }

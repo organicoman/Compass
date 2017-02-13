@@ -231,6 +231,11 @@ HRESULT CameraObj::_InitializeCOM()
 
 void CameraObj::_CleanCOM()
 {
+	if (m_windowlessVMRfilter)
+	{
+		m_windowlessVMRfilter->Release();
+		m_windowlessVMRfilter = nullptr;
+	}
 	if (m_captureGraph)
 	{
 		m_captureGraph->Release();
@@ -245,11 +250,6 @@ void CameraObj::_CleanCOM()
 	{
 		m_camMoniker->Release();
 		m_camMoniker = nullptr;
-	}
-	if (m_windowlessVMRfilter)
-	{
-		m_windowlessVMRfilter->Release();
-		m_windowlessVMRfilter = nullptr;
 	}
 }
 
@@ -377,13 +377,16 @@ CameraObj::RETURNCODE CameraObj::_ConfigVMR9()
 	// windowless mode with CWnd* as a container, display in CRect
 	hr = pVMR9control->SetVideoClippingWindow(m_containerWnd->GetSafeHwnd());
 	
+	// we should always respect the aspect ratio of the native video capture.
+	hr = pVMR9control->SetAspectRatioMode(VMR9ARMode_LetterBox);
+
 	if (m_viewRect == CRect{ 0,0,0,0 })
 	{
 		m_containerWnd->GetClientRect(&m_viewRect);
 	}
 	
 	hr = pVMR9control->SetVideoPosition(NULL, m_viewRect);
-
+	
 	// Release Resources
 	pVMR9config->Release();
 	pVMR9control->Release();
@@ -462,7 +465,7 @@ CameraObj::RETURNCODE CameraObj::Run()
 	ret = _StartGraph();
 	if (ret != RETURN_SUCCESS)
 		return ret;
-	
+
 	return RETURN_SUCCESS;
 }
 
@@ -536,7 +539,7 @@ int CameraObj::GetCurrentRunState() const
 		TRACE("CameraObj::GetCurrentState- ERROR: No filterGraph is Available!\n");
 		return RETURN_ERROR;
 	}
-	FILTER_STATE* fs = nullptr;
+	FILTER_STATE fs;
 	IBaseFilter* pVMR9filter = nullptr;
 	HRESULT hr = m_filterGraph->FindFilterByName(VMR9_RENDERER, &pVMR9filter);
 	if (hr != S_OK)
@@ -544,12 +547,64 @@ int CameraObj::GetCurrentRunState() const
 		TRACE("CameraObj::GetCurrentState- FAILRUE: Unable to Get the VMR9 filter.\n");
 		return -1;
 	}
-	hr = pVMR9filter->GetState(5000, fs);
-	if (*fs == State_Paused || *fs == State_Stopped)
+	hr = pVMR9filter->GetState(5000, &fs);
+	if (fs == State_Paused || fs == State_Stopped)
 		return 0;
-	if (*fs == State_Running)
+	if (fs == State_Running)
 		return 1;
 	return -1;
+}
+
+CameraObj::RETURNCODE CameraObj::GetNativeVideoDim(LONG & width, LONG & height, LONG & ARwidth, LONG & ARheight) const
+{
+	ASSERT(m_windowlessVMRfilter);
+	if (!m_windowlessVMRfilter)
+	{
+		TRACE("CameraObj::GetNativeVideoDim- ERROR: Windowless Renderer Filter must not be NULL.\n");
+		return RETURN_ERROR;
+	}
+	IVMRWindowlessControl9* pVMR9ctrl = nullptr;
+	HRESULT hr = m_windowlessVMRfilter->QueryInterface(IID_IVMRWindowlessControl9, (LPVOID*)&pVMR9ctrl);
+	if (hr != S_OK)
+	{
+		TRACE("CameraObj::GetNativeVideoDim- FAILURE: unable to get the VMR9 controller\n");
+		return RETURN_ERROR;
+	}
+	hr = pVMR9ctrl->GetNativeVideoSize(&width, &height, &ARwidth, &ARheight);
+	
+	pVMR9ctrl->Release();
+
+	return RETURN_SUCCESS;
+}
+
+CameraObj::RETURNCODE CameraObj::UpdateSize()
+{
+	if (!m_windowlessVMRfilter)
+	{
+		TRACE("CameraObj::UpdateSize- ERROR: Windowless Renderer Filter must not be NULL.\n");
+		return RETURN_ERROR;
+	}
+	IVMRWindowlessControl9* pVMR9ctrl = nullptr;
+	HRESULT hr = m_windowlessVMRfilter->QueryInterface(IID_IVMRWindowlessControl9, (LPVOID*)&pVMR9ctrl);
+	if (hr != S_OK)
+	{
+		TRACE("CameraObj::UpdateSize- FAILURE: unable to get the VMR9 controller\n");
+		return RETURN_ERROR;
+	}
+	
+	m_containerWnd->GetClientRect(&m_viewRect);
+	
+	hr = pVMR9ctrl->SetVideoPosition(NULL, m_viewRect);
+
+	HWND hWnd = m_containerWnd->GetSafeHwnd();
+	HDC hdc = GetDC(hWnd);
+
+	hr = pVMR9ctrl->RepaintVideo(hWnd, hdc);
+	DeleteDC(hdc);
+	
+	pVMR9ctrl->Release();
+
+	return RETURN_SUCCESS;
 }
 
 CameraObj::RETURNCODE CameraObj::CaptureImage(CBitmap & imageBuf) const
