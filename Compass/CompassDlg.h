@@ -21,7 +21,7 @@ struct sData
 
 struct sTable
 {
-	//use vector's built-in methods for elements manipulation, use Getters/Setter for data memebers manipulation.
+	//use vector's built-in methods for elements manipulation, use Getters/Setter for data members manipulation.
 	CArray<sData> Table;
 	//Getters
 	UINT GetSpot(UINT idx) const { return Table[idx].spot; }

@@ -144,7 +144,7 @@ BOOL CCompassMainFrame::SetupCarouselWnd()
 	CRect clientRect;
 	GetClientRect(&clientRect);
 	
-	m_wndCarousel = new CCarouselWnd;
+	m_wndCarousel = new CCarouselWnd(theApp.m_ActualSettings.m_nSlots);
 	ASSERT(m_wndCarousel);
 	if (!m_wndCarousel)
 	{
