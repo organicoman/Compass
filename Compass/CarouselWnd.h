@@ -27,7 +27,7 @@ class CCarouselWnd : public CFrameWndEx
 	struct sSlot
 	{
 		CRect rcHitRgn;
-		enum SLOT_STATE { SLOT_DISABLED, SLOT_ENABLED, SLOT_SELECTED, SLOT_ADDED};
+		enum SLOT_STATE { SLOT_DISABLED, SLOT_ENABLED, SLOT_SELECTED, SLOT_ADDED, SLOT_ADDED_SELECTED };
 		SLOT_STATE enmState; // assign Value from the above enum to choose visual appearance
 		BOOL bChanged;  // turn this to FALSE to prevent visual update
 	};

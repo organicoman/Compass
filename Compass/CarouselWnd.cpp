@@ -217,6 +217,10 @@ void CCarouselWnd::_DrawSlot(UINT pos, CPaintDC * pDC, CRect * boundingBox) cons
 			oldPen = pDC->SelectObject(const_cast<CPen*>(&HotLitPen));
 			oldBrush = pDC->SelectObject(const_cast<CBrush*>(&HotLitBrush));
 			break;
+		case sSlot::SLOT_ADDED_SELECTED:
+			oldPen = pDC->SelectObject(const_cast<CPen*>(&SelectedPen));
+			oldBrush = pDC->SelectObject(const_cast<CBrush*>(&HotLitBrush));
+			break;
 		}
 		pDC->Ellipse(boundingBox);
 		
@@ -275,16 +279,20 @@ void CCarouselWnd::OnLButtonDown(UINT nFlags, CPoint point)
 		if (hitRgn.PtInRegion(point))
 		{
 			sSlot::SLOT_STATE state = m_SlotCollection[n].enmState;
-			if (state == sSlot::SLOT_ENABLED) // change state only when Slot is Enabled
+			switch(state)
 			{
+			case sSlot::SLOT_ENABLED: // change state only when Slot is Enabled
 				m_SlotCollection[n].enmState = sSlot::SLOT_SELECTED;
 				m_SlotCollection[n].bChanged = TRUE;
 				InvalidateRgn(&hitRgn);
 				UpdateWindow();
-			}
-			else
-			{
-				m_SlotCollection[n].bChanged = FALSE;
+				break;
+			case sSlot::SLOT_ADDED:
+			    m_SlotCollection[n].enmState = sSlot::SLOT_ADDED_SELECTED;
+				m_SlotCollection[n].bChanged = TRUE;
+				InvalidateRgn(&hitRgn);
+				UpdateWindow();
+				break;
 			}
 		}
 	}
@@ -299,13 +307,15 @@ void CCarouselWnd::OnButtonAdd()
 	for (UINT n = 0; n < m_nSlots; n++)
 	{
 		sSlot::SLOT_STATE state = m_SlotCollection[n].enmState;
-		if (state == sSlot::SLOT_SELECTED)
+		if (state == sSlot::SLOT_SELECTED || state== sSlot::SLOT_ADDED_SELECTED)
 		{
+			m_SlotCollection[n].enmState = sSlot::SLOT_ADDED;
+			m_SlotCollection[n].bChanged = TRUE;
+
 			CRgn hitRgn;
 			CRect rect = m_SlotCollection[n].rcHitRgn;
 			rect.InflateRect(3, 3); // just for smooth drawing
-			m_SlotCollection[n].enmState = sSlot::SLOT_ADDED;
-			m_SlotCollection[n].bChanged = TRUE;
+			hitRgn.CreateEllipticRgnIndirect(&rect);
 			InvalidateRgn(&hitRgn);
 			UpdateWindow();
 		}
