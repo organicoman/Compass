@@ -300,10 +300,12 @@ void CCarouselWnd::OnLButtonDown(UINT nFlags, CPoint point)
 	CFrameWndEx::OnLButtonDown(nFlags, point);
 }
 
-
 void CCarouselWnd::OnButtonAdd()
 {
 	// TODO: Add your command handler code here
+	// Empty the List of Slots
+	m_AddedSlots.clear();
+	
 	for (UINT n = 0; n < m_nSlots; n++)
 	{
 		sSlot::SLOT_STATE state = m_SlotCollection[n].enmState;
@@ -311,6 +313,8 @@ void CCarouselWnd::OnButtonAdd()
 		{
 			m_SlotCollection[n].enmState = sSlot::SLOT_ADDED;
 			m_SlotCollection[n].bChanged = TRUE;
+			// Add this slot to the list of TO BE Added slots.
+			m_AddedSlots.emplace_back(n);
 
 			CRgn hitRgn;
 			CRect rect = m_SlotCollection[n].rcHitRgn;
@@ -320,4 +324,34 @@ void CCarouselWnd::OnButtonAdd()
 			UpdateWindow();
 		}
 	}
+	m_AddedSlots.shrink_to_fit();
+
+	// Break MFC routing mechanism. Let's call the parent of the parent of this window to eat this Message.
+	// Note: this is not the appropriate way to do it. You should override CCarousel::OnCmdMsg, catch this message then
+	// forward it the parent, from the parent, override "Parent"::OnCmdMsg to catch this message and forward it to its Parent, int the Parent 
+	// write a message-Handler function and add it to the message map.By doing this you ensure a proper data abstraction and communication
+	// between the layers of your application.
+	GetParent()->GetParent()->OnCmdMsg(IDC_BUTTON_ADD, BN_CLICKED, 0, 0);
+}
+
+void CCarouselWnd::OnButtonRemove(std::vector<UINT>& list)
+{
+	for (UINT i = 0; i < list.size(); i++)
+	{
+		UINT idx = list[i];
+		m_SlotCollection[idx].enmState = sSlot::SLOT_ENABLED;
+		m_SlotCollection[idx].bChanged = TRUE;
+
+		CRgn hitRgn;
+		CRect rect = m_SlotCollection[idx].rcHitRgn;
+		rect.InflateRect(3, 3); // just for smooth drawing.
+		hitRgn.CreateEllipticRgnIndirect(&rect);
+		InvalidateRgn(&hitRgn);
+		UpdateWindow();
+	}
+}
+
+std::vector<UINT> CCarouselWnd::GetSelection() const
+{
+	return m_AddedSlots;
 }

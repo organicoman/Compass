@@ -50,4 +50,5 @@ public:
 	CURRENTWND GetCurrentScreen() { return m_enmCurrentWnd; };
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	std::vector<UINT> GetSelectedSlots() const;
 };

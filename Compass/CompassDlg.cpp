@@ -20,8 +20,6 @@ CCompassDlg::CCompassDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_COMPASS_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-	//prepare the Table to receive data
-	m_table.Table.SetSize(12, 4);
 }
 
 void CCompassDlg::DoDataExchange(CDataExchange* pDX)
@@ -30,19 +28,6 @@ void CCompassDlg::DoDataExchange(CDataExchange* pDX)
 	
 	// Get the underlaying CListCtrl into m_ListCtrl
 	DDX_Control(pDX, IDC_LIST_TABLE, m_ListCtrl);
-	// Create a temporary container
-	//sData tmpData;
-	//DDX_Text(pDX, IDC_COMBO_POS, tmpData.pos);
-	//	DDV_MinMaxUInt(pDX, tmpData.pos, 1, 12);
-	//DDX_Text(pDX, IDC_EDIT_KV, tmpData.kV);
-	//DDX_Text(pDX, IDC_EDIT_MA, tmpData.mA);
-	//DDX_CBStringExact(pDX, IDC_COMBO_FILTER, tmpData.filter);
-	//DDX_CBStringExact(pDX, IDC_COMBO_ATMOSPHERE, tmpData.atmoshpere);
-	//DDX_Text(pDX, IDC_BROWSE_FOLDER, tmpData.path);
-	//DDX_Text(pDX, IDC_COMBO_PRESET, tmpData.preset);
-	//DDX_Check(pDX, IDC_CHECK_SAVEIMG, tmpData.capture);
-	////call this to populate the table
-	//PopulateTable(tmpData);
 }
 
 BEGIN_MESSAGE_MAP(CCompassDlg, CDialogEx)
@@ -141,17 +126,15 @@ HCURSOR CCompassDlg::OnQueryDragIcon()
 void CCompassDlg::SetupTable()
 {
 	//Populate the Table's Column Headers.
-	m_ListCtrl.InsertColumn(0, _T("Sel"), LVCFMT_LEFT, 36, 0);
-	m_ListCtrl.InsertColumn(1, _T("Pos"), LVCFMT_LEFT, 30, 1);
-	m_ListCtrl.InsertColumn(2, _T("Name"), LVCFMT_LEFT, 100, 2);
-	//m_ListCtrl.InsertColumn(3, _T("kV"), LVCFMT_LEFT, 42, 3);
-	//m_ListCtrl.InsertColumn(4, _T("mA"), LVCFMT_LEFT, 42, 4);
-	//m_ListCtrl.InsertColumn(5, _T("c/s"), LVCFMT_LEFT, 42, 5);
-	//m_ListCtrl.InsertColumn(6, _T("Filter"), LVCFMT_LEFT, 48, 6);
-	m_ListCtrl.InsertColumn(3, _T("Template"), LVCFMT_LEFT, 66, 3);
-	m_ListCtrl.InsertColumn(4, _T("Folder"), LVCFMT_LEFT, 120, 4);
-	//m_ListCtrl.InsertColumn(9, _T("Preset"), LVCFMT_LEFT, 48, 9);
-	//m_ListCtrl.InsertColumn(10, _T("Keep Capture"), LVCFMT_LEFT, 80, 10);
+	m_ListCtrl.InsertColumn(0, _T("Slot"), LVCFMT_LEFT, 42, 0);
+	m_ListCtrl.InsertColumn(1, _T("Spot"), LVCFMT_CENTER, 42, 1);
+	m_ListCtrl.InsertColumn(2, _T("#"), LVCFMT_CENTER, 34, 2);
+	m_ListCtrl.InsertColumn(3, _T("Name"), LVCFMT_CENTER, 100, 3);
+	m_ListCtrl.InsertColumn(4, _T("Template"), LVCFMT_CENTER, 66, 4);
+	m_ListCtrl.InsertColumn(5, _T("Folder"), LVCFMT_CENTER, 120, 5);
+	DWORD style = m_ListCtrl.GetExtendedStyle();
+	style |= LVS_EX_GRIDLINES;
+	m_ListCtrl.SetExtendedStyle(style);
 }
 
 void CCompassDlg::SetupIcons()
@@ -211,36 +194,55 @@ void CCompassDlg::OnIdwProperty()
 	m_pCWndCompass->SwitchWnd(CCompassMainFrame::WND_PROPERTY);
 }
 
+
 void CCompassDlg::OnButtonAdd()
 {
 	// TODO: Add your command handler code here
-	//This Message can come from the "ADD" tool-bar button of the CarouselWnd or CameraWnd
-    //check the type of the actual screen
-	using MNFRM_CW = CCompassMainFrame::CURRENTWND; // just using an Alias to that scope
-	
-	switch (m_pCWndCompass->GetCurrentScreen())
+	// this Message is directly forwarded from the child of the CComapssMainFrame object.
+
+	// let's collect the selected Slots
+	ASSERT(m_pCWndCompass);
+	if (m_pCWndCompass)
 	{
-	case MNFRM_CW::WND_CAROUSEL:
-		// call this function to get the data from the controls  then populate the table
-		UpdateData(TRUE); //CWnd method TRUE means perform data exchange with the controls
-		break;
-	case MNFRM_CW::WND_CAMERA:
-		// Idon't know yet what his button do??
-		break;
+		std::vector<UINT> selection = m_pCWndCompass->GetSelectedSlots();
+		// Add them to the Table
+		PopulateTable(selection);
 	}
 }
 
-
-// Populate the table using the controls in the Header toolbar
-void CCompassDlg::PopulateTable(sData& tmpData)
+void CCompassDlg::PopulateTable(std::vector<UINT>& selection)
 {
-	CWaitCursor wcur;
-	static unsigned char counter = 1;
-	tmpData.name += counter;
-	tmpData.spot += counter;
-	tmpData.cs = 12.34;
-	counter++;
-	UINT idx = m_table.Table.Add(tmpData);
-	//update the listCtrl with these data
+	LVFINDINFO info{ 0 };
+	
+
+	for (size_t i = 0; i < selection.size(); i++)
+	{
+		CString s;
+		UINT SlotIdx = selection[i] + 1; // add one because it is Zero based.
+		s.Format(_T("%d"), SlotIdx);
+		info.psz = s; // search for text equal to "s"
+		info.flags = LVFI_STRING;
+		int idx = m_ListCtrl.FindItem(&info);
+		int sub;
+		if (idx == -1)
+		{
+			sub = m_ListCtrl.InsertItem(SlotIdx, s);
+			m_ListCtrl.SetItemText(sub, 1, _T("1"));
+			m_ListCtrl.SetItemData(sub, SlotIdx); //save the slot index as an LPARAM data for comparison later
+			continue;
+		}	
+		int count = 2;
+		info.flags = LVFI_PARAM; // search for the item's LPARAM data
+		info.lParam = SlotIdx;
+		while ((sub = m_ListCtrl.FindItem(&info, idx)) != -1)
+		{
+			count++;
+			idx = sub;
+		}
+		s.Format(_T("%d"), count);
+		m_ListCtrl.InsertItem(idx + 1, _T(""));
+		m_ListCtrl.SetItemText(idx + 1, 1, s);
+		m_ListCtrl.SetItemData(idx + 1, SlotIdx);
+	}
 
 }

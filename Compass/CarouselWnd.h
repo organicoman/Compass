@@ -2,7 +2,7 @@
 #include "Symbols.h"
 #include "CameraWnd.h"
 
-// all this can be loaded from a theme file if you want.
+// all this can be loaded from a theme file if you want, Including the CPen and CBrush member objects of the Class down here.
 const COLORREF cDisabled = RGB(80, 80, 80);
 const COLORREF cDisabledPen = RGB(10, 10, 10);
 
@@ -17,7 +17,8 @@ const COLORREF cHotLitPen = RGB(0, 80, 200);
 
 
 // CCarouselWnd frame
-// The purpose of the Class is the draw it's items and manage their visual states. Namely the Carousel figure.
+// The purpose of the Class is to draw it's items and manage their visual states. Namely the Carousel figure. and communicate
+// the indexes of the added slots to the outside world
 
 class CCarouselWnd : public CFrameWndEx
 {
@@ -62,6 +63,7 @@ public:
 protected:
 	UINT m_nSlots;
 	std::vector<sSlot> m_SlotCollection;
+	std::vector<UINT> m_AddedSlots;
 
 	// Drawing Brushes and Pens
 	CPen DisabledPen{ PS_SOLID,2,cDisabledPen };
@@ -76,10 +78,18 @@ protected:
 	CPen HotLitPen{ PS_SOLID, 3, cHotLitPen };
 	CBrush HotLitBrush{ cHotLit };
 
-
 public:
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnButtonAdd();
+	// Interface
+public:
+
+	// Returns the list of the Added slots (slots added several times included)
+	std::vector<UINT> GetSelection() const;
+
+	// Removes the list's items from the collection of Added slots. Called from the App dialog.(CCompassDlg).
+	void OnButtonRemove(std::vector<UINT>& list);
+	
 };
 

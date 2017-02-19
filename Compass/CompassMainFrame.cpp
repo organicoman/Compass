@@ -16,7 +16,6 @@ CCompassMainFrame::~CCompassMainFrame()
 {
 }
 
-
 BEGIN_MESSAGE_MAP(CCompassMainFrame, CFrameWnd)
 	ON_WM_VSCROLL()
 	ON_WM_SIZE()
@@ -439,4 +438,10 @@ void CCompassMainFrame::OnSize(UINT nType, int cx, int cy)
 	}
 
 	//CFrameWnd::OnSize(nType, cx, cy);
+}
+
+std::vector<UINT> CCompassMainFrame::GetSelectedSlots() const
+{
+	// 2nd since the data member CCarousel::m_AddedSlots is filled, Grab it.
+	return  m_wndCarousel->GetSelection();
 }
