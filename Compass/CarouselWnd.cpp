@@ -283,17 +283,20 @@ void CCarouselWnd::OnLButtonDown(UINT nFlags, CPoint point)
 			{
 			case sSlot::SLOT_ENABLED: // change state only when Slot is Enabled
 				m_SlotCollection[n].enmState = sSlot::SLOT_SELECTED;
-				m_SlotCollection[n].bChanged = TRUE;
-				InvalidateRgn(&hitRgn);
-				UpdateWindow();
 				break;
 			case sSlot::SLOT_ADDED:
 			    m_SlotCollection[n].enmState = sSlot::SLOT_ADDED_SELECTED;
-				m_SlotCollection[n].bChanged = TRUE;
-				InvalidateRgn(&hitRgn);
-				UpdateWindow();
+				break;
+			case sSlot::SLOT_SELECTED:
+				m_SlotCollection[n].enmState = sSlot::SLOT_ENABLED;
+				break;
+			case sSlot::SLOT_ADDED_SELECTED:
+				m_SlotCollection[n].enmState = sSlot::SLOT_ADDED;
 				break;
 			}
+			m_SlotCollection[n].bChanged = TRUE;
+			InvalidateRgn(&hitRgn);
+			UpdateWindow();
 		}
 	}
 

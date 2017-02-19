@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(CCompassDlg, CDialogEx)
 	ON_COMMAND(IDC_BUTTON_SPECTRUM, &CCompassDlg::OnIdwSpectrum)
 	ON_COMMAND(IDC_BUTTON_PROPERTY, &CCompassDlg::OnIdwProperty)
 	ON_COMMAND(IDC_BUTTON_ADD, &CCompassDlg::OnButtonAdd)
+	ON_NOTIFY(NM_DBLCLK, IDC_LIST_TABLE, &CCompassDlg::OnDblclkListTable)
 END_MESSAGE_MAP()
 
 
@@ -128,12 +129,11 @@ void CCompassDlg::SetupTable()
 	//Populate the Table's Column Headers.
 	m_ListCtrl.InsertColumn(0, _T("Slot"), LVCFMT_LEFT, 42, 0);
 	m_ListCtrl.InsertColumn(1, _T("Spot"), LVCFMT_CENTER, 42, 1);
-	m_ListCtrl.InsertColumn(2, _T("#"), LVCFMT_CENTER, 34, 2);
-	m_ListCtrl.InsertColumn(3, _T("Name"), LVCFMT_CENTER, 100, 3);
-	m_ListCtrl.InsertColumn(4, _T("Template"), LVCFMT_CENTER, 66, 4);
-	m_ListCtrl.InsertColumn(5, _T("Folder"), LVCFMT_CENTER, 120, 5);
+	m_ListCtrl.InsertColumn(2, _T("Name"), LVCFMT_CENTER, 100, 2);
+	m_ListCtrl.InsertColumn(3, _T("Template"), LVCFMT_CENTER, 100, 3);
+	m_ListCtrl.InsertColumn(4, _T("Folder"), LVCFMT_CENTER, 120, 4);
 	DWORD style = m_ListCtrl.GetExtendedStyle();
-	style |= LVS_EX_GRIDLINES;
+	style |= LVS_EX_DOUBLEBUFFER | LVS_EX_GRIDLINES | LVS_EX_FULLROWSELECT | LVS_EX_CHECKBOXES;
 	m_ListCtrl.SetExtendedStyle(style);
 }
 
@@ -213,7 +213,6 @@ void CCompassDlg::OnButtonAdd()
 void CCompassDlg::PopulateTable(std::vector<UINT>& selection)
 {
 	LVFINDINFO info{ 0 };
-	
 
 	for (size_t i = 0; i < selection.size(); i++)
 	{
@@ -226,9 +225,13 @@ void CCompassDlg::PopulateTable(std::vector<UINT>& selection)
 		int sub;
 		if (idx == -1)
 		{
-			sub = m_ListCtrl.InsertItem(SlotIdx, s);
-			m_ListCtrl.SetItemText(sub, 1, _T("1"));
+			int BottomPos = m_ListCtrl.GetItemCount();
+			sub = m_ListCtrl.InsertItem(BottomPos, s);
+			m_ListCtrl.SetItemText(sub, 1, _T("1")); // the first addition is always the first Spot on the Slot.
 			m_ListCtrl.SetItemData(sub, SlotIdx); //save the slot index as an LPARAM data for comparison later
+			CString name;
+			name.Format(_T("Slot-%d / Spot-%d"), SlotIdx, 1); // Just a default Name
+			m_ListCtrl.SetItemText(sub, 2, name);
 			continue;
 		}	
 		int count = 2;
@@ -236,13 +239,27 @@ void CCompassDlg::PopulateTable(std::vector<UINT>& selection)
 		info.lParam = SlotIdx;
 		while ((sub = m_ListCtrl.FindItem(&info, idx)) != -1)
 		{
-			count++;
+			count++; // count how many spots for this Slot.
 			idx = sub;
 		}
 		s.Format(_T("%d"), count);
 		m_ListCtrl.InsertItem(idx + 1, _T(""));
 		m_ListCtrl.SetItemText(idx + 1, 1, s);
 		m_ListCtrl.SetItemData(idx + 1, SlotIdx);
+		CString name;
+		name.Format(_T("Slot-%d / Spot-%d"), SlotIdx, count); // Just a Default Name
+		m_ListCtrl.SetItemText(idx + 1, 2, name);
 	}
 
+}
+
+void CCompassDlg::OnDblclkListTable(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	
+	// it the User DBLCLicks the "template" cell (- position ==3), then open the Template Dialog.
+	if (pNMItemActivate->iSubItem == 3)
+	{
+		// TODO: Implement the Templates Dialogs.
+	}
 }

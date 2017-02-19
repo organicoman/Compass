@@ -50,4 +50,5 @@ public:
 	afx_msg void OnIdwSpectrum();
 	afx_msg void OnIdwProperty();
 	afx_msg void OnButtonAdd();
+	afx_msg void OnDblclkListTable(NMHDR *pNMHDR, LRESULT *pResult);
 };
