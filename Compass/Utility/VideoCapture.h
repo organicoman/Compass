@@ -83,7 +83,7 @@ public:
 	//RETURNCODE RecordVideo(const CString& filePath);
 	//RETURNCODE StopRecord();
 	//RETURNCODE WriteText(const CString& text, const CPoint pos, const CFont* font = nullptr, const COLORREF color = RGB(0, 0, 0)/*BLACK*/);
-	//RETURNCODE DrawEllipse(const CPoint pos, const CSize size);
+	RETURNCODE DrawGraticul(const CPoint center, const CSize size, BOOL DimScreen = TRUE);
 	//RETURNCODE DrawRectangle(const CPoint pos, const CSize size);
 	//RETURNCODE AddWaterMark(const CImage bitmap);
 	const CWnd* GetContainerWnd()const { return m_containerWnd; };
@@ -105,7 +105,6 @@ private:
 	ICaptureGraphBuilder2* m_captureGraph;
 	IBaseFilter* m_windowlessVMRfilter;
 
-	CBitmap m_overlayBitmap;
 	const CWnd* m_containerWnd;
 	CRect m_viewRect;
 	//BOOL m_bRecording;

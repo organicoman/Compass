@@ -261,5 +261,6 @@ void CCompassDlg::OnDblclkListTable(NMHDR *pNMHDR, LRESULT *pResult)
 	if (pNMItemActivate->iSubItem == 3)
 	{
 		// TODO: Implement the Templates Dialogs.
+		MessageBox(_T("Opens a Properties Grid Control, where you can setup all the spots properties\nNot Implemented yet!"));
 	}
 }

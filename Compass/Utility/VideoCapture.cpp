@@ -378,15 +378,15 @@ CameraObj::RETURNCODE CameraObj::_ConfigVMR9()
 	hr = pVMR9control->SetVideoClippingWindow(m_containerWnd->GetSafeHwnd());
 	
 	// we should always respect the aspect ratio of the native video capture.
-	hr = pVMR9control->SetAspectRatioMode(VMR9ARMode_LetterBox);
+	//hr = pVMR9control->SetAspectRatioMode(VMR9ARMode_LetterBox);
 
 	if (m_viewRect == CRect{ 0,0,0,0 })
 	{
 		m_containerWnd->GetClientRect(&m_viewRect);
 	}
-	
+		
 	hr = pVMR9control->SetVideoPosition(NULL, m_viewRect);
-	
+
 	// Release Resources
 	pVMR9config->Release();
 	pVMR9control->Release();
@@ -639,7 +639,7 @@ CameraObj::RETURNCODE CameraObj::CaptureImage(CBitmap & imageBuf) const
 		return RETURN_ERROR;
 	}
 	BITMAPINFOHEADER* pBmpInfoHdr = reinterpret_cast<BITMAPINFOHEADER*>(pDIB);
-	// two cases are present - Uncompressed Image, -Compressed Image.
+	// two cases are present - Uncompressed Image / -Compressed Image.
 	if (pBmpInfoHdr->biCompression == BI_RGB)
 	{
 		// we will capture only 24bpp and above.
@@ -648,10 +648,82 @@ CameraObj::RETURNCODE CameraObj::CaptureImage(CBitmap & imageBuf) const
 			TRACE("CameraObj::CaptureImage- WARNING: Images with bit depth less than 24bpp is not supported.\n");
 			return RETURN_ERROR;
 		}
-
 	}
 
 	CoTaskMemFree((LPVOID)pDIB);
 	pVMR9ctrl->Release();
+	return RETURN_SUCCESS;
+}
+
+CameraObj::RETURNCODE CameraObj::DrawGraticul(const CPoint center, const CSize size, BOOL DimScreen/*true*/)
+{
+	CPoint topLeft = center - CPoint(size.cx / 2, size.cy / 2);
+	CPoint bottomRight = center + CPoint(size.cx / 2, size.cy / 2);
+	CRect cEllipse{ topLeft, bottomRight };
+	CDC paintDC;
+
+	// Create a compatible memory DC
+	CDC* tempDC = (const_cast<CWnd*>(m_containerWnd))->GetDC();
+
+	paintDC.CreateCompatibleDC(tempDC);
+
+	// Create a Compatible Bitmap
+	CRect rect;
+	m_containerWnd->GetClientRect(&rect);
+
+	HBITMAP hBitmap = CreateCompatibleBitmap(*tempDC, rect.Width(), rect.Height());
+
+	(const_cast<CWnd*>(m_containerWnd))->ReleaseDC(tempDC); // release the temporary DC
+
+	ASSERT(hBitmap);
+	if (!hBitmap)
+	{
+		TRACE("CameraObj::DrawEllipse- ERROR: could not create a Bitmap!\n");
+		return RETURN_ERROR;
+	}
+
+	// Perform the Drawing.
+	HGDIOBJ oldBitmap = paintDC.SelectObject(hBitmap);
+	DeleteBitmap(oldBitmap); // we don't need it
+
+	CPen YellowPen{ PS_SOLID, 2, RGB(255, 255, 0) };
+	CPen* oldPen = paintDC.SelectObject(&YellowPen);
+	DeletePen(oldPen); // we don't need it
+
+	HBRUSH hollowBrush = GetStockBrush(HOLLOW_BRUSH);
+	HBRUSH whiteBrush = GetStockBrush(WHITE_BRUSH);
+
+	HBRUSH selectedBrush = DimScreen ? whiteBrush : hollowBrush;
+	HGDIOBJ oldBrush = paintDC.SelectObject(selectedBrush);
+	DeleteBrush(oldBrush); // we don't need it
+			
+	paintDC.Ellipse(cEllipse);
+	cEllipse.DeflateRect(size.cx / 5, size.cy / 5);
+	CPen YellowPen1{ PS_SOLID, 1, RGB(255, 255, 0) };
+	CPen* oldPen1 = paintDC.SelectObject(&YellowPen1);
+	paintDC.Ellipse(cEllipse);
+	paintDC.SelectObject(oldPen1);
+
+	IVMRMixerBitmap9* pMixer = nullptr;
+	HRESULT hr = m_windowlessVMRfilter->QueryInterface(IID_IVMRMixerBitmap9, (void**)&pMixer);
+	if (hr != S_OK)
+	{
+		TRACE("ERROR: Unable to draw a composite Ellipse\n");
+		return RETURN_ERROR;
+	}
+
+	VMR9AlphaBitmap bitmap { VMR9AlphaBitmap_hDC | VMR9AlphaBitmap_SrcColorKey,
+							 paintDC,
+							 0,
+							 rect,
+							 VMR9NormalizedRect{ 0.0,0.0,1.0,1.0 },
+							 DimScreen ? 0.7f : 1.0f,
+							 DimScreen ? COLORREF(RGB(255,255,255)) : COLORREF(RGB(0,0,0)),
+							 0 };
+	
+	hr = pMixer->SetAlphaBitmap(&bitmap);
+	paintDC.DeleteDC();
+	pMixer->Release();
+	
 	return RETURN_SUCCESS;
 }

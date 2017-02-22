@@ -10,7 +10,8 @@
 
 IMPLEMENT_DYNCREATE(CCameraWnd, CFrameWndEx)
 
-CCameraWnd::CCameraWnd()
+CCameraWnd::CCameraWnd():
+	m_bGraticuleFlag(FALSE)
 {
 	m_VideoCam = new CameraObj(this);
 }
@@ -26,6 +27,7 @@ BEGIN_MESSAGE_MAP(CCameraWnd, CFrameWndEx)
 	ON_WM_SHOWWINDOW()
 	ON_WM_SIZE()
 	ON_WM_PAINT()
+	ON_COMMAND(IDC_BUTTON_GRATICULE, &CCameraWnd::OnButtonGraticule)
 END_MESSAGE_MAP()
 
 BOOL CCameraWnd::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd,
@@ -109,7 +111,39 @@ void CCameraWnd::OnShowWindow(BOOL bShow, UINT nStatus)
 void CCameraWnd::OnSize(UINT nType, int cx, int cy)
 {
 	CFrameWndEx::OnSize(nType, cx, cy);
-	
-	// TODO: Add your message handler code here
 	m_VideoCam->UpdateSize();
+	
+	// TODO: Add your message handler CRect rect;
+	CRect rect;
+	GetClientRect(&rect);
+	CPoint center;
+	center.x = rect.left + rect.Width() / 2;
+	center.y = rect.top + rect.Height() / 2;
+	CSize size(100, 100); // just for test
+	if (m_bGraticuleFlag == TRUE)
+		m_VideoCam->DrawGraticul(center, size);
+		
+	
+
+}
+
+void CCameraWnd::OnButtonGraticule()
+{
+	// TODO: Add your command handler code here
+	CRect rect;
+	GetClientRect(&rect);
+	CPoint center;
+	center.x = rect.left + rect.Width() / 2;
+	center.y = rect.top + rect.Height() / 2;
+	CSize size(100, 100); // just for test
+	if (m_bGraticuleFlag == FALSE)
+	{
+		m_VideoCam->DrawGraticul(center, size);
+		m_bGraticuleFlag = TRUE;
+	}
+	else
+	{
+		m_VideoCam->DrawGraticul(0, 0, FALSE);
+		m_bGraticuleFlag = FALSE;
+	}
 }
